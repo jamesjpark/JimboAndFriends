@@ -1,51 +1,17 @@
-import './logo.svg'
-import './App.css'
+import React from "react"; 
+import Projects from "./Projects"
+import Login from "./Login"
 
-import React from 'react';
-
-class Projects extends React.Component{ //put these in separate files
-  render(){
-    return(
-      <div>
-        <h1>
-          Projects
-        </h1>
-        <p> These are your projects.</p>
-      </div>
-    )
-  }
-}
-
-class Login extends React.Component{//put this ins separate file
-
-  login = () => {
-    this.props.handleLogin = true
-  }
-
-  render(){
-    return(
-      <div>
-        <h1> 
-          Please "log in"
-        </h1>
-        <p> 
-          Do you have access?
-        </p>
-        <button onclick={this.login}> 
-          Yes</button>
-        
-        <button>
-          No</button>
-      </div>
-    )
-  }
-}
 
 class App extends React.Component {
-  constructor(props){
+  constructor(props) {
+    // in React, we always need to call the superclass constructor first with super() 
+    // if we override the component's constructor
     super(props)
-    this.state = { isLoggedIn: false }
 
+    // app owns the login state because it needs it in order to do conditional rendering.
+    // shared state should always be as low as possible in the component hierarchy.
+    this.state = { isLoggedIn: false }
   }
 
   handleLogin = (loggedIn) => {
@@ -54,15 +20,16 @@ class App extends React.Component {
     })
   }
 
-  render(){
-    if(this.state.isLoggedIn){
-      return(<Projects />)
+  render() {
+    // conditional rendering
+    if (this.state.isLoggedIn) {
+      return (<Projects />)
     }
-    else{
-      return(<Login handleLogin = {this.handleLogin} />)
+    else {
+      // Login needs to be able to mutate the login state, so we pass it handleLogin as a prop
+      return (<Login handleLogin={this.handleLogin}/>)
     }
   }
-
 }
 
 export default App;
