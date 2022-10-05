@@ -9,7 +9,7 @@ EE461L Web Application Projet by Brandon Vu, Hao-Zhe Loo, Joonha Park, Srishaan 
 
 
 #Sprint 3 10/03-10/10
-Research and development in connecting Frontend(React) to Backend(Flask).
 
+Research and development in connecting Frontend(React) to Backend(Flask).
 Research and development in connecting Backend(Flask) to Database(MongoDB)
 
