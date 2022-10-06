@@ -30,10 +30,9 @@ Research and development in connecting Frontend(React) to Backend(Flask).
 Research and development in connecting Backend(Flask) to Database(MongoDB)
 CSS styling
 
-
-MongoDB and Python: https://www.mongodb.com/languages/python
-CSS Boxing: https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model
-Link Navigation and Router in React: https://www.copycat.dev/blog/react-js-navigation/
+MongoDB and Python: https://www.mongodb.com/languages/python <br />
+CSS Boxing: https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model <br />
+Link Navigation and Router in React: https://www.copycat.dev/blog/react-js-navigation/ <br />
 
 ## Sprint 4 10/11-10/18
 
