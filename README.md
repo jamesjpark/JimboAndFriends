@@ -5,12 +5,14 @@ EE461L Web Application Projet by Brandon Vu, Hao-Zhe Loo, Joonha Park, Srishaan 
 ## Checkpoint 1
 [Checkpoint 1 Document](https://docs.google.com/document/d/13tEbrVV1XnsT6WM8rLi5gIoCUGzmAdGeV9bU5C600cM/edit?usp=sharing)
 
-##### HW1 Git Commands(9/06)
+
 
 
 ## Sprint 1 9/18-9/25
 Goals:
 Research and familiarity with javascript in React
+
+##### HW1 Git Commands(9/06)
 
 ##### HW2 User and Password Encryption(9/19)
 
