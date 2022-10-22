@@ -39,6 +39,10 @@ Link Navigation and Router in React: https://www.copycat.dev/blog/react-js-navig
 ## Sprint 4 10/11-10/18
 ##### HW5 React.js(10/11)
 
+## Sprint 5 10/19-10/26
+##### HW6 Flask(10/24)
+https://stackabuse.com/get-request-query-parameters-with-flask/
 
+## Sprint 5 10/27-11/3
 
 
