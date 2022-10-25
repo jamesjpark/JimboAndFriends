@@ -25,7 +25,6 @@ db = client['App']
 user_collection = db["Users"]
 
 
-
 jwt = JWTManager(app)
 @app.after_request
 def refresh_expiring_jwts(response):
