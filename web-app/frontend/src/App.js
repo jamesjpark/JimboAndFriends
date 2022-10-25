@@ -1,10 +1,12 @@
-import { BrowserRouter, Route, Routes, Link,  } from 'react-router-dom'
-import { useState, } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import React, { useState, } from 'react'
 
 import Login from './Components/Login'
 import Projects from './Components/Projects'
 import Header from './Components/Header'
 import useToken from './Components/useToken'
+import Signup from './Components/Signup'
+
 import './App.css'
 
 function App() {
@@ -13,25 +15,41 @@ function App() {
   
   return (
     
-    <BrowserRouter>
-    <div className="App">
-    <Header token={removeToken}/>
+    // <BrowserRouter>
+    // <div className="App">
     
-    {!token && token!=="" && token!== undefined?  
-        <Login setToken={setToken} />
-        :(
-          <>
-
-          <Routes>
-
-          <Route exact path = "/" element = {<Login setToken={setToken} />}></Route>
-          <Route path = "/projects" element ={<Projects token={token} setToken={setToken}/>}> </Route>
-          </Routes>
-      
-          </>
+    
+    // {!token && token!=="" && token!== undefined?  
+    //     <Login setToken={setToken} />
+    //     :(
           
-        )} 
+    //       <>
+    //       <Header token={removeToken}/>   
+          
+    //       <Routes>
+
+    //       <Route exact path = "/" element = {<Login setToken={setToken} />}></Route>
+    //       <Route path = "/projects" element ={<Projects token={token} setToken={setToken}/>}> </Route>
+    //       <Route path = "/signup" element = {<Signup/>}> </Route>
+    //       </Routes>
+      
+    //       </>
+          
+    //     )} 
+    // </div>
+    // </BrowserRouter>
+
+
+    <BrowserRouter>
+    <div>hello</div>
+    <div className="App">
+    <Routes>
+    <Route exact path = "/" element = {<Login />}></Route>
+   
+    </Routes>
+
     </div>
+
     </BrowserRouter>
     
   );

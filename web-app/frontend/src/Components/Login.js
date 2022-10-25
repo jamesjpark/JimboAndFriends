@@ -1,68 +1,117 @@
-import { useState} from 'react';
+import React,{ useState} from 'react';
 import axios from "axios";
 import { Link, useNavigate} from 'react-router-dom';
+
+
+
+
 function Login(props) {
 
     const [loginForm, setloginForm] = useState({
-        email: "",
-        password: ""
+        userName: "",
+        password: "",
+        userID: ""
     })
     const navigate = useNavigate();
-    function logMeIn(event) {
-      axios({
-        method: "POST",
-        url:"/token",
-        data:{
-          email: loginForm.email,
-          password: loginForm.password
-         }
-      })
-      .then((response) => {
-        props.setToken(response.data.access_token)
-      }).catch((error) => {
-        if (error.response) {
-          console.log(error.response)
-          console.log(error.response.status)
-          console.log(error.response.headers)
-          }
-      })
+    
 
-      setloginForm(({
-        email: "",
-        password: ""}))
 
-      event.preventDefault()
+    // function logMeIn(event) {
+    //   axios({
+    //     method: "POST",
+    //     url:"/token",
+    //     data:{
+    //       email: loginForm.email,
+    //       password: loginForm.password
+    //      }
+    //   })
+    //   .then((response) => {
+    //     props.setToken(response.data.access_token)
+    //   }).catch((error) => {
+    //     if (error.response) {
+    //       console.log(error.response)
+    //       console.log(error.response.status)
+    //       console.log(error.response.headers)
+    //       }
+    //   })
+
+    //   setloginForm(({
+    //     email: "",
+    //     password: ""}))
+
+    //   event.preventDefault()
       
-      navigate("/projects")
-    }
+    //   navigate("/projects")
+    // }
+
+    // function signUp(event) {
+      
+
+    //   setloginForm(({
+    //     email: "",
+    //     password: ""}))
+        
+    //   event.preventDefault()
+    //   navigate("/signup")
+
+    // }
 
     function handleChange(event) { 
+      event.preventDefault();
       const {value, name} = event.target
       setloginForm(prevNote => ({
           ...prevNote, [name]: value})
       )}
+
+    function onLogin(event){
+      console.log(loginForm)
+      axios.get("http://127.0.0.1:5000/login/" + loginForm.userName + "/" + loginForm.password + "/" +loginForm.userID).then(
+        res => {
+          alert(res.data.msg)
+        }
+      )
+      event.preventDefault()
+      navigate("/projects")
+    }
+
+    function onSignup(event){
+      console.log(loginForm)
+      axios.get("http://127.0.0.1:5000/signup/" + loginForm.userName + "/" + loginForm.password+ "/" +loginForm.userID).then(
+        res => {
+          alert(res.data.msg)
+        }
+      )
+      event.preventDefault()
+      
+    }
+      
+
 
     return (
       <div>
         <h1>Login</h1>
           <form className="login">
             <input onChange={handleChange} 
-                  type="email"
-                  text={loginForm.email} 
-                  name="email" 
-                  placeholder="Email" 
-                  value={loginForm.email} />
+                  type="userName"
+                  text={loginForm.userName} 
+                  name="userName" 
+                  placeholder="Username" 
+                  value={loginForm.userName} />
             <input onChange={handleChange} 
                   type="password"
                   text={loginForm.password} 
                   name="password" 
                   placeholder="Password" 
                   value={loginForm.password} />
+            <input onChange={handleChange} 
+                  type="userID"
+                  text={loginForm.userID} 
+                  name="userID" 
+                  placeholder="UserID" 
+                  value={loginForm.userID} />
 
-        <button onClick={logMeIn}>Submit</button>
-
-         
-
+        <button onClick={onLogin} > Login</button>
+        <button onClick={onSignup} > Signup</button>
         </form>
       </div>
     );
