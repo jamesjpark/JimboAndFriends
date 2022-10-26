@@ -1,51 +1,64 @@
-import { useState, useNavigate} from 'react'
-import axios from "axios";
+import React, { useState } from 'react';
+import ProjectsForm from './ProjectsForm';
+import HWSet from './HWSet'
+import JoinForm from './JoinForm';
+import { RiCloseCircleLine } from 'react-icons/ri';
+import { TiEdit } from 'react-icons/ti';
+import { Link, useNavigate} from 'react-router-dom';
+
+const Projects = ({ projects, removeProject, updateProject }) => {
+  const [edit, setEdit] = useState({
+    id: null,
+    value: ''
+  });
 
 
+  const [joinText, setJoinText] = useState(true);
 
-function Projects(props) {
-  const [projects, setProjects] = useState(null)
-  
-  
-  function getData() {
-    axios({
-      method: "GET",
-      url: "/projects",
-      headers: {
-        Authorization: 'Bearer ' + props.token
-      }
-    })
-    
-    .then((response) => {
-      const res =response.data
-      res.access_token && props.setToken(res.access_token)
-      setProjects(({
-        projects_name: res.name,
-        about: res.about}))
-
-    }).catch((error) => {
-      if (error.response) {
-        console.log(error.response)
-        console.log(error.response.status)
-        console.log(error.response.headers)
-        }
-    })
-    
+  function handleJoin(){
+      
+    setJoinText(!joinText);
+      
   }
 
-  return (
-    <div className="Projects">
+  const submitUpdate = value => {
+    updateProject(edit.id, value);
+    setEdit({
+      id: null,
+      value: ''
+    });
+  };
 
-    <p>To get your projects details: </p>
-    <button onClick={getData}>Click me</button>
-        {projects && <div>
-              <p>Project name: {projects.projects_name}</p>
-              <p>About me: {projects.about}</p>
-            </div>
-        }
+  if (edit.id) {
+    return <ProjectsForm edit={edit} onSubmit={submitUpdate} />;
+  }
 
+  return projects.map((project, index) => (
+    
+    <div
+      className= {'project-row'}
+      key={index}
+    >
+     
+      <div key={project.id} className = "Project-Name">
+        {project.text}
+      </div>
+      
+      <HWSet project = {project}/>
+      <JoinForm project = {project}/>
+      
+      <div className='icons'>
+        <RiCloseCircleLine
+          onClick={() => removeProject(project.id)}
+          className='delete-icon'
+        />
+        <TiEdit
+          onClick={() => setEdit({ id: project.id, value: project.text })}
+          className='edit-icon'
+        />
+      </div>
     </div>
-  );
-}
+  ));
+};
 
-export default Projects
+export default Projects;

@@ -1,10 +1,185 @@
-.App {
+.App{
   text-align: center;
+
+}
+body{
+
+  background-color: #6facd7;
 }
 .wrapper {
   padding: 20px;
 }
 
 h1{
+  text-align: center;
+  margin: 20px 20px 20px 20px;
+  font-size: 24px;
   color:  green;
 }
+form{
+  text-align: center;
+  display: inline-block;
+}
+
+
+
+* {
+  box-sizing: border-box;
+  font-family: 'Times', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans';
+}
+
+body {
+  background: white
+}
+
+.project-app {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  background: #252d50;
+  /* text-align: center; */
+  margin: 0px;
+  border-radius: 10px;
+  padding-bottom: 32px;
+}
+
+h1 {
+  
+}
+.HWSET{
+  font-size: larger;
+}
+
+.Project-Name{
+  font-size: larger;
+}
+
+.joinButton{
+  
+  padding: 16px;
+  border: solid;
+  cursor: pointer;
+  outline: none;
+  background:rgba(235, 217, 186, 0.801);
+}
+.check{
+ 
+  padding: 16px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  background:rgba(219, 209, 191, 0.801);
+  
+}
+.HWSET-Input{
+  padding: 5px 12px 5px 12px;
+  margin: 10px 10px 10px 10px;
+  border: 2px solid #c9b38a;
+  outline: none;
+  width: 320px;
+  /* background: transparent; */
+  color: rgb(150, 35, 35);
+}
+.loginForm{
+  text-align: center;
+}
+.login {
+  text-align: center;
+  align-items: center;
+  padding: 14px 32px 14px 16px;
+  border-radius: 4px 0 0 4px;
+  border: 2px solid #c9b38a;
+  outline: none;
+  width: 320px;
+  background: transparent;
+  color: black;
+}
+.project-form {
+  margin: 20px;
+  text-align: center;
+}
+
+.project-input {
+  padding: 14px 32px 14px 16px;
+  border-radius: 4px 0 0 4px;
+  border: 2px solid #c9b38a;
+  outline: none;
+  width: 320px;
+  background: transparent;
+  color: black;
+}
+
+.project-input::placeholder {
+  color: #e2e2e2;
+}
+
+.project-button {
+  padding: 16px;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  outline: none;
+  background:rgba(219, 145, 6, 0.801);
+  
+  
+  color: #fff;
+  text-transform: capitalize;
+}
+
+.project-input.edit {
+  border: 2px solid #149fff;
+}
+
+.project-button.edit {
+  
+  padding: 16px 22px;
+}
+
+.project-container {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.project-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
+  color: #fff;
+  background: linear-gradient(
+    90deg,
+    rgb(242, 154, 92) 0%,
+    rgba(255, 84, 17, 1) 100%
+  );
+
+  padding: 20px;
+  border-radius: 5px;
+  /* width: 90%; */
+}
+
+.project-row:nth-child(3n + 1) {
+  background: blue;
+
+}
+
+.project-row:nth-child(3n + 2) {
+  background: red;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.delete-icon {
+ 
+}
+
+.edit-icon {
+ 
+}
+
