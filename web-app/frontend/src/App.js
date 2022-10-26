@@ -5,8 +5,7 @@ import Login from './Components/Login'
 import Projects from './Components/Projects'
 import Header from './Components/Header'
 import useToken from './Components/useToken'
-import Signup from './Components/Signup'
-
+import ProjectsList from './Components/ProjectsList'
 import './App.css'
 
 function App() {
@@ -41,11 +40,11 @@ function App() {
 
 
     <BrowserRouter>
-    <div>hello</div>
+    
     <div className="App">
     <Routes>
     <Route exact path = "/" element = {<Login />}></Route>
-   
+    <Route path = "/projects" element = {<ProjectsList/>}></Route>
     </Routes>
 
     </div>

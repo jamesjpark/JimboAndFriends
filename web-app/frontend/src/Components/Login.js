@@ -1,4 +1,4 @@
-import React,{ useState} from 'react';
+import React,{ useState, useEffect} from 'react';
 import axios from "axios";
 import { Link, useNavigate} from 'react-router-dom';
 
@@ -12,49 +12,10 @@ function Login(props) {
         password: "",
         userID: ""
     })
+
+    const [loggedIn, setLoggedIn] = useState(0);
     const navigate = useNavigate();
-    
-
-
-    // function logMeIn(event) {
-    //   axios({
-    //     method: "POST",
-    //     url:"/token",
-    //     data:{
-    //       email: loginForm.email,
-    //       password: loginForm.password
-    //      }
-    //   })
-    //   .then((response) => {
-    //     props.setToken(response.data.access_token)
-    //   }).catch((error) => {
-    //     if (error.response) {
-    //       console.log(error.response)
-    //       console.log(error.response.status)
-    //       console.log(error.response.headers)
-    //       }
-    //   })
-
-    //   setloginForm(({
-    //     email: "",
-    //     password: ""}))
-
-    //   event.preventDefault()
-      
-    //   navigate("/projects")
-    // }
-
-    // function signUp(event) {
-      
-
-    //   setloginForm(({
-    //     email: "",
-    //     password: ""}))
-        
-    //   event.preventDefault()
-    //   navigate("/signup")
-
-    // }
+    let str = false;
 
     function handleChange(event) { 
       event.preventDefault();
@@ -68,17 +29,29 @@ function Login(props) {
       axios.get("http://127.0.0.1:5000/login/" + loginForm.userName + "/" + loginForm.password + "/" +loginForm.userID).then(
         res => {
           alert(res.data.msg)
+          //setLoggedIn(res.data.login)
+          str = res.data.login
+          console.log(str)
+          if(str == true){
+            navigate("/projects")
+            str = false;
+          }
         }
       )
       event.preventDefault()
-      navigate("/projects")
+      
+      
+      
     }
+
+
 
     function onSignup(event){
       console.log(loginForm)
       axios.get("http://127.0.0.1:5000/signup/" + loginForm.userName + "/" + loginForm.password+ "/" +loginForm.userID).then(
         res => {
           alert(res.data.msg)
+
         }
       )
       event.preventDefault()
@@ -88,8 +61,9 @@ function Login(props) {
 
 
     return (
-      <div>
+      <div className = "loginForm">
         <h1>Login</h1>
+
           <form className="login">
             <input onChange={handleChange} 
                   type="userName"
@@ -119,41 +93,3 @@ function Login(props) {
 
 export default Login;
 
-
-// class Login extends React.Component {
-//     constructor(props){
-//       super(props);
-//       this.state = {
-//         errorMessages: {},
-//         isSubmitted: false
-
-//       };
-      
-
-      
-//     }
-
-
-//     logUserIn = () => {
-//       // we can access handleLogin from App since it was passed as a prop
-//       this.props.handleLogin(true)
-//     }
-  
-//     dontLogUserIn = () => {
-//       alert('Thank you for your honesty.')
-//       this.props.handleLogin(false)
-//     }
-    
-  
-//     render() {
-//       return (
-        
-//         <div>
-//           <h1>"Sign in"</h1>
-//           <p>Do you have permission to use this site?</p>
-//           <button onClick={this.logUserIn}>Yes</button>
-//           <button onClick={this.dontLogUserIn}>No</button>
-//         </div>
-//       )
-//     }
-//  }
