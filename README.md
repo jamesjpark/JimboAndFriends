@@ -41,10 +41,15 @@ Link Navigation and Router in React: https://www.copycat.dev/blog/react-js-navig
 ##### HW5 React.js(10/11)
 https://medium.com/@akhilmaulloo/the-fremp-stack-building-a-full-stack-web-application-91308e505250
 
+Goals:
+Front End development: signup page, login page, projects page, styling
 
 ## Sprint 5 10/19-10/26
 ##### HW6 Flask(10/24)
 https://stackabuse.com/get-request-query-parameters-with-flask/
+
+Goals:
+Making backend to connect to made front end components
 
 
 ## Sprint 6 10/27-11/3
