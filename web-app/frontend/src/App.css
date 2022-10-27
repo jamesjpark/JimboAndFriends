@@ -1,10 +1,10 @@
 .App{
   text-align: center;
-
+  
 }
 body{
 
-  background-color: #6facd7;
+  background-color: #6198bf;
 }
 .wrapper {
   padding: 20px;
@@ -27,10 +27,6 @@ form{
   box-sizing: border-box;
   font-family: 'Times', 'Lucida Sans Unicode', 'Lucida Grande',
     'Lucida Sans';
-}
-
-body {
-  background: white
 }
 
 .project-app {
@@ -150,8 +146,8 @@ h1 {
   color: #fff;
   background: linear-gradient(
     90deg,
-    rgb(242, 154, 92) 0%,
-    rgba(255, 84, 17, 1) 100%
+    rgb(92, 194, 242) 0%,
+    rgb(71, 102, 163) 100%
   );
 
   padding: 20px;
@@ -160,13 +156,11 @@ h1 {
 }
 
 .project-row:nth-child(3n + 1) {
-  background: blue;
+  background: rgb(152, 173, 197);
 
 }
 
-.project-row:nth-child(3n + 2) {
-  background: red;
-}
+
 
 .icons {
   display: flex;

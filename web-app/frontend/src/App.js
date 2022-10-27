@@ -13,7 +13,20 @@ function App() {
   const { token, removeToken, setToken } = useToken();
   
   return (
+    <div>
+<BrowserRouter>
     
+    <div className="App">
+    <Routes>
+    <Route exact path = "/" element = {<Login />}></Route>
+    <Route path = "/projects" element = {<ProjectsList/>}></Route>
+    </Routes>
+
+    </div>
+
+    </BrowserRouter>
+    
+    </div>
     // <BrowserRouter>
     // <div className="App">
     
@@ -39,17 +52,6 @@ function App() {
     // </BrowserRouter>
 
 
-    <BrowserRouter>
-    
-    <div className="App">
-    <Routes>
-    <Route exact path = "/" element = {<Login />}></Route>
-    <Route path = "/projects" element = {<ProjectsList/>}></Route>
-    </Routes>
-
-    </div>
-
-    </BrowserRouter>
     
   );
 }
