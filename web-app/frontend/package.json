@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://git.heroku.com/howling-chupacabra-13536.git",
+  "proxy": "https://git.heroku.com/grisly-dracula-56467.git",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
