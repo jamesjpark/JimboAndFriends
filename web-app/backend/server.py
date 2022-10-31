@@ -138,9 +138,7 @@ def leaveProject(proj_id):
 @app.route('/api/login/<username>/<password>/<userID>', methods = ['GET','POST'])
 def login(username, password, userID):
     user = user_collection.find_one({
-        'username': username,
-        'password': password,
-        'userID': userID
+        'username': username
     })
 
     if user:
