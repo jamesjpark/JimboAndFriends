@@ -3,6 +3,7 @@ import axios from "axios";
 import {useNavigate} from 'react-router-dom';
 function SignUp(props) {
 
+    // axios.defaults.baseURL = ""
     const [loginForm, setloginForm] = useState({
         userID: "",
         password: "",
@@ -38,15 +39,13 @@ function SignUp(props) {
     function handleChange(event) { 
       const {value, name} = event.target
       setloginForm(prevNote => ({
-          ...prevNote, [name]: value}), () =>{
-            console.log(this.loginForm)
-          }
+          ...prevNote, [name]: value})
       )}
 
     
     function onSignup(event){
       console.log(loginForm)
-      axios.get("http://127.0.0.1:5000/signup/" + loginForm.username + "/" + loginForm.password+ "/" +loginForm.userID).then(
+      axios.get("/api/signup/" + loginForm.username + "/" + loginForm.password+ "/" +loginForm.userID).then(
         res => {
           alert(res.data.msg)
           navigate("/signUp")

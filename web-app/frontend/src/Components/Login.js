@@ -26,7 +26,7 @@ function Login(props) {
 
     function onLogin(event){
       console.log(loginForm)
-      axios.get("http://127.0.0.1:5000/login/" + loginForm.userName + "/" + loginForm.password + "/" +loginForm.userID).then(
+      axios.get("/api/login/" + loginForm.userName + "/" + loginForm.password + "/" +loginForm.userID).then(
         res => {
           alert(res.data.msg)
           //setLoggedIn(res.data.login)
