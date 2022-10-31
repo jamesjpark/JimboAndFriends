@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, timezone
 from flask_cors import CORS
 from pymongo import MongoClient
 import certifi
+from passlib.hash import sha256_crypt
 
 app = Flask(__name__
 ,static_folder= './build', static_url_path='/')
@@ -142,12 +143,11 @@ def login(username, password, userID):
         'userID': userID
     })
 
-
     if user:
-        return jsonify({'msg': "Logged in", 'login': True})
+        if sha256_crypt.verify(userID, user['userID']):
+            if sha256_crypt.verify(password, user['password']):
+                return jsonify({'msg': "Logged in", 'login': True})
 
-
-    
     return jsonify({'msg': "User or password incorrect", 'login': False})
 
 
@@ -156,13 +156,11 @@ def login(username, password, userID):
 def signUp(userName, password, userID):
     user = {
         'username': userName,
-        'password': password,
-        'userID': userID
-        
+        'password': sha256_crypt.encrypt(password),
+        'userID': sha256_crypt.encrypt(userID)  
     }
     
-
-    if user_collection.find_one({'userID': user['userID']}):
+    if user_collection.find_one({'userID': userID}):
         return jsonify({'msg': "UserID used already"})
 
     if user_collection.insert_one(user):
