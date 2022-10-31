@@ -6,13 +6,14 @@ from pymongo import MongoClient
 import certifi
 from passlib.hash import sha256_crypt
 
-app = Flask(__name__)
+app = Flask(__name__
+,static_folder= './build', static_url_path='/')
 CORS(app)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 ca = certifi.where()
-CONNECTION_STRING = "mongodb+srv://Vufoo:Thanh123@cluster0.u5ttiid.mongodb.net/?retryWrites=true&w=majority"
+CONNECTION_STRING = "mongodb+srv://hloo:n63KLSdtzC02ZjVa@jimboandfriends.gul6vvc.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(CONNECTION_STRING, tlsCAFile=ca)
 db = client['App']
 user_collection = db["Users"]
@@ -70,10 +71,15 @@ joined = -1
 #     return response
 
 @app.route("/")
-def home():
-    return "starting page"
+def index():
+    print("ERHRERERE")
+    return app.send_static_file('index.html')
 
-@app.route("/checkIn/<int:proj_id>/<int:qty>/<int:HWSet>")
+# @app.errorhandler(404)
+# def not_found(e):
+#     return app.send_static_file('index.html')
+
+@app.route("/api/checkIn/<int:proj_id>/<int:qty>/<int:HWSet>")
 def checkIn_hardware(proj_id, qty, HWSet):
     if proj_id in inventory:
         if HWSet == 1:
@@ -92,7 +98,7 @@ def checkIn_hardware(proj_id, qty, HWSet):
 
     return jsonify({'qty': qty})
 
-@app.route("/checkOut/<int:proj_id>/<int:qty>/<int:HWSet>")
+@app.route("/api/checkOut/<int:proj_id>/<int:qty>/<int:HWSet>")
 def checkOut_hardware(proj_id, qty, HWSet):
     if proj_id in inventory:
         if HWSet == 1:
@@ -108,7 +114,7 @@ def checkOut_hardware(proj_id, qty, HWSet):
 
     return jsonify({'qty': qty})
 
-@app.route("/joinProject/<int:proj_id>")
+@app.route("/api/joinProject/<int:proj_id>")
 def joinProject(proj_id):
     global joined
     if joined == -1:
@@ -117,7 +123,7 @@ def joinProject(proj_id):
         return jsonify({'status': 0, 'msg': 'Already joined a project!'})
     return jsonify({'status': 1, 'msg': f'Joined project {proj_id}'})
 
-@app.route("/leaveProject/<int:proj_id>")
+@app.route("/api/leaveProject/<int:proj_id>")
 def leaveProject(proj_id):
     global joined
     if joined == -1:
@@ -129,10 +135,12 @@ def leaveProject(proj_id):
     return jsonify({'status': 1, 'msg': f'Left project {proj_id}'})
 
 
-@app.route('/login/<userName>/<password>/<userID>', methods = ['GET','POST'])
-def login(userName, password, userID):
+@app.route('/api/login/<username>/<password>/<userID>', methods = ['GET','POST'])
+def login(username, password, userID):
     user = user_collection.find_one({
-        'userName': userName,
+        'username': username,
+        'password': password,
+        'userID': userID
     })
 
     if user:
@@ -144,12 +152,12 @@ def login(userName, password, userID):
 
 
 
-@app.route('/signup/<userName>/<password>/<userID>', methods = ['GET','POST'])
+@app.route('/api/signup/<userName>/<password>/<userID>', methods = ['GET','POST'])
 def signUp(userName, password, userID):
     user = {
-        'userName': userName,
+        'username': userName,
         'password': sha256_crypt.encrypt(password),
-        'userID': sha256_crypt.encrypt(userID)
+        'userID': sha256_crypt.encrypt(userID)  
     }
     
     if user_collection.find_one({'userID': userID}):
@@ -164,7 +172,7 @@ def signUp(userName, password, userID):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
 
 
 #from user import routes
