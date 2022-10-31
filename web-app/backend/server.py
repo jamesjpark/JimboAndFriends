@@ -11,7 +11,7 @@ CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 ca = certifi.where()
-CONNECTION_STRING = "mongodb+srv://Vufoo:Thanh123@cluster0.u5ttiid.mongodb.net/?retryWrites=true&w=majority"
+CONNECTION_STRING = "mongodb+srv://hloo:n63KLSdtzC02ZjVa@jimboandfriends.gul6vvc.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(CONNECTION_STRING, tlsCAFile=ca)
 db = client['App']
 user_collection = db["Users"]
@@ -128,10 +128,10 @@ def leaveProject(proj_id):
     return jsonify({'status': 1, 'msg': f'Left project {proj_id}'})
 
 
-@app.route('/login/<userName>/<password>/<userID>', methods = ['GET','POST'])
-def login(userName, password, userID):
+@app.route('/login/<username>/<password>/<userID>', methods = ['GET','POST'])
+def login(username, password, userID):
     user = user_collection.find_one({
-        'userName': userName,
+        'username': username,
         'password': password,
         'userID': userID
     })
@@ -149,9 +149,10 @@ def login(userName, password, userID):
 @app.route('/signup/<userName>/<password>/<userID>', methods = ['GET','POST'])
 def signUp(userName, password, userID):
     user = {
-        'userName': userName,
+        'username': userName,
         'password': password,
         'userID': userID
+        
     }
     
 
