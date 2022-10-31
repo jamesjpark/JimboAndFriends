@@ -133,16 +133,13 @@ def leaveProject(proj_id):
 def login(userName, password, userID):
     user = user_collection.find_one({
         'userName': userName,
-        'password': password,
         'userID': userID
     })
 
-
     if user:
-        return jsonify({'msg': "Logged in", 'login': True})
+        if sha256_crypt.verify(password, user['password']):
+            return jsonify({'msg': "Logged in", 'login': True})
 
-
-    
     return jsonify({'msg': "User or password incorrect", 'login': False})
 
 
@@ -151,7 +148,7 @@ def login(userName, password, userID):
 def signUp(userName, password, userID):
     user = {
         'userName': userName,
-        'password': password,
+        'password': sha256_crypt(password),
         'userID': userID
     }
     
