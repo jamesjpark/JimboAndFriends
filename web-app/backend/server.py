@@ -148,7 +148,7 @@ def login(userName, password, userID):
 def signUp(userName, password, userID):
     user = {
         'userName': userName,
-        'password': sha256_crypt(password),
+        'password': sha256_crypt.encrypt(password),
         'userID': sha256_crypt.encrypt(userID)
     }
     
