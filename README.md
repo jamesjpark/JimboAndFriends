@@ -54,6 +54,9 @@ Making backend to connect to made front end components
 
 ## Sprint 6 10/27-11/3
 
+Goals:
+Deployment of application
+
 
 
 
