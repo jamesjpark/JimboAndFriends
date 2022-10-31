@@ -3,8 +3,6 @@ import axios from "axios";
 import { Link, useNavigate} from 'react-router-dom';
 
 
-
-
 function Login(props) {
 
     const [loginForm, setloginForm] = useState({
@@ -44,8 +42,6 @@ function Login(props) {
       
     }
 
-
-
     function onSignup(event){
       console.log(loginForm)
       axios.get("http://127.0.0.1:5000/signup/" + loginForm.userName + "/" + loginForm.password+ "/" +loginForm.userID).then(
@@ -58,8 +54,6 @@ function Login(props) {
       
     }
       
-
-
     return (
       <div className = "loginForm">
         <h1>Login</h1>

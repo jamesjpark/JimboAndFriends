@@ -4,8 +4,9 @@ from datetime import datetime, timedelta, timezone
 from flask_cors import CORS
 from pymongo import MongoClient
 import certifi
+from flask.helpers import send_from_directory
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='frontend/build', static_url_path='')
 CORS(app)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -70,8 +71,9 @@ joined = -1
 
 @app.route("/")
 def home():
-    return "starting page"
+    return send_from_directory(app.static_folder, 'index.html')
 
+@cross_origin()
 @app.route("/checkIn/<int:proj_id>/<int:qty>/<int:HWSet>")
 def checkIn_hardware(proj_id, qty, HWSet):
     if proj_id in inventory:
@@ -91,6 +93,7 @@ def checkIn_hardware(proj_id, qty, HWSet):
 
     return jsonify({'qty': qty})
 
+@cross_origin()
 @app.route("/checkOut/<int:proj_id>/<int:qty>/<int:HWSet>")
 def checkOut_hardware(proj_id, qty, HWSet):
     if proj_id in inventory:
@@ -107,6 +110,7 @@ def checkOut_hardware(proj_id, qty, HWSet):
 
     return jsonify({'qty': qty})
 
+@cross_origin()
 @app.route("/joinProject/<int:proj_id>")
 def joinProject(proj_id):
     global joined
@@ -116,6 +120,7 @@ def joinProject(proj_id):
         return jsonify({'status': 0, 'msg': 'Already joined a project!'})
     return jsonify({'status': 1, 'msg': f'Joined project {proj_id}'})
 
+@cross_origin()
 @app.route("/leaveProject/<int:proj_id>")
 def leaveProject(proj_id):
     global joined
@@ -128,6 +133,7 @@ def leaveProject(proj_id):
     return jsonify({'status': 1, 'msg': f'Left project {proj_id}'})
 
 
+@cross_origin()
 @app.route('/login/<userName>/<password>/<userID>', methods = ['GET','POST'])
 def login(userName, password, userID):
     user = user_collection.find_one({
@@ -136,16 +142,13 @@ def login(userName, password, userID):
         'userID': userID
     })
 
-
     if user:
         return jsonify({'msg': "Logged in", 'login': True})
 
-
-    
     return jsonify({'msg': "User or password incorrect", 'login': False})
 
 
-
+@cross_origin()
 @app.route('/signup/<userName>/<password>/<userID>', methods = ['GET','POST'])
 def signUp(userName, password, userID):
     user = {
@@ -154,7 +157,6 @@ def signUp(userName, password, userID):
         'userID': userID
     }
     
-
     if user_collection.find_one({'userID': user['userID']}):
         return jsonify({'msg': "UserID used already"})
 
@@ -163,8 +165,6 @@ def signUp(userName, password, userID):
     
     return jsonify({'msg': "Signup failed"})
    
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
