@@ -48,7 +48,7 @@ function SignUp(props) {
       axios.get("/api/signup/" + loginForm.username + "/" + loginForm.password+ "/" +loginForm.userID).then(
         res => {
           alert(res.data.msg)
-          navigate("/signUp")
+          navigate("/")
         }
       )
       event.preventDefault()
