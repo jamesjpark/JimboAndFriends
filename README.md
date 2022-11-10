@@ -27,10 +27,10 @@ Setting up MongoDB
 MongoDB Connection: https://ankush-chavan.medium.com/creating-flask-application-with-mongodb-database-77ec45b5b995
 
 Goals:
-Login Page Development
-Research and development in connecting Frontend(React) to Backend(Flask).
-Research and development in connecting Backend(Flask) to Database(MongoDB)
-CSS styling
+Login Page Development <br />
+Research and development in connecting Frontend(React) to Backend(Flask). <br />
+Research and development in connecting Backend(Flask) to Database(MongoDB) <br />
+CSS styling <br />
 
 MongoDB and Python: https://www.mongodb.com/languages/python <br />
 CSS Boxing: https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model <br />
