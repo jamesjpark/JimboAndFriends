@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import ProjectsForm from './ProjectsForm';
 import Projects from './Projects';
 import { Link, useNavigate} from 'react-router-dom';
-
+import axios from "axios";
 
 function ProjectsList() {
   const [projects, setProjects] = useState([]);
 
   const addProject = project => {
-    if (!project.text || /^\s*$/.test(project.text)) {
+    if (!project.name || /^\s*$/.test(project.name)) {
       return;
     }
 
@@ -19,16 +19,22 @@ function ProjectsList() {
   };
 
   const updateProject = (projectId, newValue) => {
-    if (!newValue.text || /^\s*$/.test(newValue.text)) {
+    if (!newValue.name || /^\s*$/.test(newValue.name)) {
       return;
     }
 
     setProjects(prev => prev.map(item => (item.id === projectId ? newValue : item)));
   };
 
-  const removeProject = id => {
-    const removedArr = [...projects].filter(project => project.id !== id);
 
+  function removeProject(id, name) { 
+    axios.get("http://127.0.0.1:5000/api/deleteProject/" + name+ "/"+ id ).then(
+        res => {
+          alert(res.data.msg)
+          
+        }
+      )
+    const removedArr = [...projects].filter(project => project.id !== id);
     setProjects(removedArr);
   };
 
@@ -37,9 +43,10 @@ function ProjectsList() {
   return (
     <>
       <h1>
-      Your Projects
+      PROJECTS
       </h1>
-      <ProjectsForm onSubmit={addProject} />
+      <ProjectsForm 
+        onSubmit={addProject} />
       <Projects
         projects={projects}
         removeProject={removeProject}

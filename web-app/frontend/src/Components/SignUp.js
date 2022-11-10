@@ -5,36 +5,36 @@ function SignUp(props) {
 
     // axios.defaults.baseURL = ""
     const [loginForm, setloginForm] = useState({
-        userID: "",
+        userName: "",
         password: "",
-        username: ""
+        userID: ""
     })
     const navigate = useNavigate();
-    function logMeIn(event) {
-      axios({
-        method: "POST",
-        url:"/token",
-        data:{
-          email: loginForm.email,
-          password: loginForm.password
-         }
-      })
-      .then((response) => {
-        props.setToken(response.data.access_token)
-      }).catch((error) => {
-        if (error.response) {
-          console.log(error.response)
-          console.log(error.response.status)
-          console.log(error.response.headers)
-          }
-      })
+    // function logMeIn(event) {
+    //   axios({
+    //     method: "POST",
+    //     url:"/token",
+    //     data:{
+    //       email: loginForm.email,
+    //       password: loginForm.password
+    //      }
+    //   })
+    //   .then((response) => {
+    //     props.setToken(response.data.access_token)
+    //   }).catch((error) => {
+    //     if (error.response) {
+    //       console.log(error.response)
+    //       console.log(error.response.status)
+    //       console.log(error.response.headers)
+    //       }
+    //   })
 
-      setloginForm(({
-        email: "",
-        password: ""}))
+    //   setloginForm(({
+    //     email: "",
+    //     password: ""}))
 
-      event.preventDefault()
-    }
+    //   event.preventDefault()
+    // }
 
     function handleChange(event) { 
       const {value, name} = event.target
@@ -45,7 +45,7 @@ function SignUp(props) {
     
     function onSignup(event){
       console.log(loginForm)
-      axios.get("/api/signup/" + loginForm.username + "/" + loginForm.password+ "/" +loginForm.userID).then(
+      axios.get("http://127.0.0.1:5000/api/signup/" + loginForm.userName + "/" + loginForm.password+ "/" +loginForm.userID).then(
         res => {
           alert(res.data.msg)
           navigate("/")
@@ -63,7 +63,7 @@ function SignUp(props) {
                     <div className="mb-3">
                         <label>Username</label>
                         <input
-                            name="username"
+                            name="userName"
                             type="text"
                             className="form-control"
                             placeholder="username"

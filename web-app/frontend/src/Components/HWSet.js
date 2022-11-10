@@ -210,9 +210,10 @@ function HWSet(props) {
         Check Out
       </button>
       {open ? <Popup text= "hardware checked out" closePopup={() => setOpen(false)} text2 = {num2}/> : null}
-
+      
 
       </form>
+      
     </div>
   )
 }

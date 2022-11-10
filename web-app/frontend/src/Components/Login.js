@@ -2,9 +2,6 @@ import React,{ useState, useEffect} from 'react';
 import axios from "axios";
 import { Link, useNavigate} from 'react-router-dom';
 
-
-
-
 function Login(props) {
 
     const [loginForm, setloginForm] = useState({
@@ -26,12 +23,12 @@ function Login(props) {
 
     function onLogin(event){
       console.log(loginForm)
-      axios.get("/api/login/" + loginForm.userName + "/" + loginForm.password + "/" +loginForm.userID).then(
+      axios.get("http://127.0.0.1:5000/api/login/" + loginForm.userName + "/" + loginForm.password + "/" +loginForm.userID).then(
         res => {
           alert(res.data.msg)
           //setLoggedIn(res.data.login)
           str = res.data.login
-          console.log(str)
+          
           if(str == true){
             navigate("/projects")
             str = false;
