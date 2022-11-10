@@ -2,30 +2,29 @@ import React, { useState } from 'react';
 import ProjectsForm from './ProjectsForm';
 import HWSet from './HWSet'
 import JoinForm from './JoinForm';
+import Authorized from './Authorized';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { TiEdit } from 'react-icons/ti';
 import { Link, useNavigate} from 'react-router-dom';
 
 const Projects = ({ projects, removeProject, updateProject }) => {
   const [edit, setEdit] = useState({
+    name: '',
     id: null,
-    value: ''
+    description: "",
+    authorized: ""
+    
   });
+  
 
-
-  const [joinText, setJoinText] = useState(true);
-
-  function handleJoin(){
-      
-    setJoinText(!joinText);
-      
-  }
-
-  const submitUpdate = value => {
-    updateProject(edit.id, value);
+  const submitUpdate = name => {
+    updateProject(edit.id, edit.name);
     setEdit({
+      name: '',
       id: null,
-      value: ''
+      description: "",
+      authorized: ""
+      
     });
   };
 
@@ -44,16 +43,17 @@ const Projects = ({ projects, removeProject, updateProject }) => {
         {project.text}
       </div>
       
+      <Authorized project = {project}/>
       <HWSet project = {project}/>
       <JoinForm project = {project}/>
       
       <div className='icons'>
         <RiCloseCircleLine
-          onClick={() => removeProject(project.id)}
+          onClick={() => removeProject(project.id, project.text)}
           className='delete-icon'
         />
         <TiEdit
-          onClick={() => setEdit({ id: project.id, value: project.text })}
+          onClick={() => setEdit({ id: project.id, name: project.text })}
           className='edit-icon'
         />
       </div>

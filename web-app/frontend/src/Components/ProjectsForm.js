@@ -1,29 +1,66 @@
 import React, { useState, useEffect, useRef } from 'react';
 //import {Button} from '@material-ui/core';
 import { Link, useNavigate} from 'react-router-dom';
+import axios from "axios";
 
 function ProjectsForm(props) {
-  const [input, setInput] = useState(props.edit ? props.edit.value : '');
-
+  const [input, setInput] = useState(props.edit ? props.edit.name : '');
+  
+  const [project, setProject] = useState({
+    name: "",
+    projectId: "",
+    description: "",
+    authorized: ""
+  })
+  let str = false;
   const inputRef = useRef(null);
 
-  useEffect(() => {
-    inputRef.current.focus();
-  });
+  function handleChange(event) { 
+    
+    const {value, name} = event.target
+    setProject(prevNote => ({
+        ...prevNote, [name]: value})
+  )};
 
-  const handleChange = e => {
-    setInput(e.target.value);
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    props.onSubmit({
-      id: Math.floor(Math.random() * 10000),
-      text: input
+  function handleSubmit(event) { 
+    event.preventDefault();
+    console.log(project);
+    //console.log(props.edit.value);
+    if(project.name&&project.projectId&&project.authorized){
       
-    });
-    setInput('');
+      axios.get("http://127.0.0.1:5000/api/newProject/" + project.name + "/" + project.projectId+ "/" +project.description + "/"+ project.authorized).then(
+        res => {
+          alert(res.data.msg)
+          str = res.data.new
+          
+          if(str == true){
+            props.onSubmit({
+              id: project.projectId,
+              text: project.name,
+              name: project.name,
+              authorized: project.authorized,
+              description: project.description
+              
+            });
+            str = false;
+          }
+        }
+      )
+      
+      setInput('');
+      setProject({
+        name: "",
+        projectId: "",
+        description: "",
+        authorized: ""
+      });
+      
+    }
+
+    else{
+      alert("Missing field");
+    }
+
   };
 
   return (
@@ -47,16 +84,43 @@ function ProjectsForm(props) {
         <>
           <input
             placeholder='Project Name'
-            value={input}
             onChange={handleChange}
-            name='text'
+            value = {project.name}
+            name='name'
             className='project-input'
             ref={inputRef}
           />
+          <input
+            placeholder='Project ID'
+            onChange = {handleChange}
+             value = {project.projectId}
+            name='projectId'
+            className = 'project-input'
+            ref={inputRef}
+          />
+          <input
+            placeholder='Description'
+            onChange = {handleChange}
+            value = {project.description}
+            name='description'
+            className = 'project-input'
+            ref={inputRef}
+          />
+          <input
+            placeholder='Authorized Users'
+            onChange = {handleChange}
+            value = {project.authorized}
+            name='authorized'
+            className = 'project-input'
+            ref={inputRef}
+          />
+
           <button color = "primary" onClick={handleSubmit} className='project-button'>
             New Project
           </button>
+          
         </>
+        
       )}
     </form>
   );

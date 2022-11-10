@@ -11,29 +11,7 @@ function JoinForm(props){
   const [project, setProject] = useState(props.project.id)
   const [join, setJoin] = useState("")
   const navigate = useNavigate();
-  useEffect(() => {
-    // Using fetch to fetch the api from 
-    // flask server it will be redirected to proxy
-    fetch("/join/<projectId>").then((res) =>
-        res.json().then((data) => {
-            // Setting a data from api
-            setJoin(data);
-        }).then(data =>console.log(data)).then(error=>console.log(error))
-    );
-  }, []);
-
-  useEffect(() => {
-    // Using fetch to fetch the api from 
-    // flask server it will be redirected to proxy
-    fetch("/leave/<projectId>").then((res) =>
-        res.json().then((data) => {
-            // Setting a data from api
-            setJoin(data);
-        })
-    );
-  }, []);
-
-
+  
   function leave(){
     axios({
       method: "GET",
