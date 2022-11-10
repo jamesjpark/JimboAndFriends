@@ -1,6 +1,6 @@
 import React,{ useState, useEffect} from 'react';
 import axios from "axios";
-import { Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 function Login(props) {
 
@@ -10,7 +10,6 @@ function Login(props) {
         userID: ""
     })
 
-    const [loggedIn, setLoggedIn] = useState(0);
     const navigate = useNavigate();
     let str = false;
 
@@ -29,7 +28,7 @@ function Login(props) {
           //setLoggedIn(res.data.login)
           str = res.data.login
           
-          if(str == true){
+          if(str === true){
             navigate("/projects")
             str = false;
           }
@@ -60,30 +59,38 @@ function Login(props) {
 
     return (
       <div className = "loginForm">
-        <h1>Login</h1>
+        <h1>LOGIN</h1>
 
           <form className="login">
-            <input onChange={handleChange} 
+            <input className = "userName" onChange={handleChange} 
                   type="userName"
                   text={loginForm.userName} 
                   name="userName" 
                   placeholder="Username" 
                   value={loginForm.userName} />
-            <input onChange={handleChange} 
+            <input className = "password" onChange={handleChange} 
                   type="password"
                   text={loginForm.password} 
                   name="password" 
                   placeholder="Password" 
                   value={loginForm.password} />
-            <input onChange={handleChange} 
+            <input className = "userID" onChange={handleChange} 
                   type="userID"
                   text={loginForm.userID} 
                   name="userID" 
                   placeholder="UserID" 
                   value={loginForm.userID} />
-
-        <button onClick={onLogin} > Login</button>
-        <button onClick={onSignup} > Signup</button>
+        <div>
+        <div >
+        <button className = "loginButton" color = "primary" onClick={onLogin} > Login</button>
+        </div>
+       
+        <div >
+        <button className = "signupButton" color = "primary" onClick={onSignup} > Signup</button>
+        </div>
+        </div>
+        
+       
         </form>
       </div>
     );
