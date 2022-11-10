@@ -49,22 +49,22 @@ Front End development: signup page, login page, projects page, styling
 https://stackabuse.com/get-request-query-parameters-with-flask/
 
 Goals:
-Making backend to connect to made front end components
-Connecting Users to database
-Encryption of Passwords and UserIDs
+Making backend to connect to made front end components <br />
+Connecting Users to database <br />
+Encryption of Passwords and UserIDs <br />
 
 ## Sprint 6 10/27-11/3
 ##### HW7 Testing(11/3)
 
 Goals:
-Deployment of application to Heroku
-Connecting Projects and Hardware to backend and database
-Adding new inputs to project creation
+Deployment of application to Heroku <br />
+Connecting Projects and Hardware to backend and database <br />
+Adding new inputs to project creation <br />
 
 ## Sprint 7 11/4-11/11
 
 Goals:
-Finishing touches and style
-Finish Checkpoint 2 Requirements
-Deploy new changes to Heroku
+Finishing touches and style <br />
+Finish Checkpoint 2 Requirements <br />
+Deploy new changes to Heroku <br />
 
