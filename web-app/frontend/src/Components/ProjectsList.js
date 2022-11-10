@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProjectsForm from './ProjectsForm';
 import Projects from './Projects';
 import { Link, useNavigate} from 'react-router-dom';
@@ -7,8 +7,18 @@ import axios from "axios";
 function ProjectsList() {
   const [projects, setProjects] = useState([]);
 
+  useEffect(() => {
+    axios.get("http://127.0.0.1:5000/api/projectsList").then(
+        res => {
+          console.log(res.data)
+          setProjects(res.data)
+        }
+      )
+    
+  }, []);
+
   const addProject = project => {
-    if (!project.name || /^\s*$/.test(project.name)) {
+    if (!project.projectName || /^\s*$/.test(project.projectName)) {
       return;
     }
 
@@ -19,7 +29,7 @@ function ProjectsList() {
   };
 
   const updateProject = (projectId, newValue) => {
-    if (!newValue.name || /^\s*$/.test(newValue.name)) {
+    if (!newValue.projectName || /^\s*$/.test(newValue.projectName)) {
       return;
     }
 
