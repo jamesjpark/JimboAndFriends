@@ -8,7 +8,7 @@ from passlib.hash import sha256_crypt
 from bson.json_util import dumps
 
 app = Flask(__name__,static_folder= './build', static_url_path='/')
-CORS(app)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -25,6 +25,7 @@ inventory = {}
 joined = -1
 
 @app.route("/")
+@cross_origin()
 def index():
     print("ERHRERERE")
     return app.send_static_file('index.html')
@@ -114,6 +115,7 @@ def leaveProject(projectId: int):
 
 
 @app.route('/api/login/<username>/<password>/<userID>', methods = ['GET','POST'])
+@cross_origin()
 def login(username, password, userID):
     user = user_collection.find_one({
         'username': username
@@ -129,6 +131,7 @@ def login(username, password, userID):
 
 
 @app.route('/api/signup/<userName>/<password>/<userID>', methods = ['GET','POST'])
+@cross_origin()
 def signUp(userName, password, userID):
     user = {
         'username': userName,
@@ -146,6 +149,7 @@ def signUp(userName, password, userID):
 
 
 @app.route('/api/newProject/<projectName>/<int:projectID>/<description>/<authorized>', methods = ['POST'])
+@cross_origin()
 def newProject(projectName, projectID, description, authorized):
     project = {
         'projectName': projectName,
@@ -164,16 +168,18 @@ def newProject(projectName, projectID, description, authorized):
     
     return jsonify({'msg': "Unable to create project", 'new': False})
    
-@app.route("/api/deleteProject/<projectName>/<projectID>", methods = ['GET','POST'])
-def deleteProject(projectName, projectID):
-    if project_collection.find_one({'projectID': projectID}):
-        project_collection.delete_one({'projectID': projectID})
-    return jsonify({'msg': "Project \"" + projectName + "\" deleted", 'new': True})
+@app.route("/api/deleteProject/<int:projectID>", methods = ['GET','POST'])
+@cross_origin()
+def deleteProject(projectID):
+    projectboom = project_collection.find_one({'projectID': projectID})
+    boom = project_collection.delete_one({'projectID': projectID})
+
+    return jsonify({'msg': "Project ID "+ str(projectID) + "deleted", 'new': True})
 
 
 @app.route('/api/projectsList', methods = ['GET'])
+@cross_origin()
 def projectsList():
-
     cursor = project_collection.find()
     list_cur = list(cursor)
     json_data = json.dumps(list_cur, default=str)
@@ -186,6 +192,5 @@ if __name__ == '__main__':
 
 
 #from user import routes
-
 
 
