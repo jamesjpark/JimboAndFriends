@@ -6,8 +6,7 @@ from pymongo import MongoClient
 import certifi
 from passlib.hash import sha256_crypt
 
-app = Flask(__name__
-,static_folder= './build', static_url_path='/')
+app = Flask(__name__,static_folder= './build', static_url_path='/')
 CORS(app)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -17,6 +16,8 @@ CONNECTION_STRING = "mongodb+srv://hloo:n63KLSdtzC02ZjVa@jimboandfriends.gul6vvc
 client = MongoClient(CONNECTION_STRING, tlsCAFile=ca)
 db = client['App']
 user_collection = db["Users"]
+project_collection = db["Projects"]
+authorized_collection = db["Authorized Users"]
 
 inventory = {}
 joined = -1
@@ -98,6 +99,8 @@ def checkIn_hardware(proj_id, qty, HWSet):
 
     return jsonify({'qty': qty})
 
+
+
 @app.route("/api/checkOut/<int:proj_id>/<int:qty>/<int:HWSet>")
 def checkOut_hardware(proj_id, qty, HWSet):
     if proj_id in inventory:
@@ -123,16 +126,7 @@ def joinProject(proj_id):
         return jsonify({'status': 0, 'msg': 'Already joined a project!'})
     return jsonify({'status': 1, 'msg': f'Joined project {proj_id}'})
 
-@app.route("/api/leaveProject/<int:proj_id>")
-def leaveProject(proj_id):
-    global joined
-    if joined == -1:
-        return jsonify({'status': 0, 'msg': "Haven't joined a project"})
-    elif proj_id != joined:
-        return jsonify({'status': 0, 'msg': "Haven't joined this project"})
-    else:
-        joined = -1
-    return jsonify({'status': 1, 'msg': f'Left project {proj_id}'})
+
 
 
 @app.route('/api/login/<username>/<password>/<userID>', methods = ['GET','POST'])
@@ -165,8 +159,30 @@ def signUp(userName, password, userID):
         return jsonify({'msg': "User signed up"})
     
     return jsonify({'msg': "Signup failed"})
-   
 
+
+@app.route('/api/newProject/<projectName>/<projectID>/<description>/<authorized>', methods = ['GET','POST'])
+def newProject(projectName, projectID, description, authorized):
+    project = {
+        'projectName': projectName,
+        'projectID': projectID,
+        'description': description,
+        'authorized': authorized
+    }
+    
+    if project_collection.find_one({'projectID': projectID}):
+        return jsonify({'msg': "ProjectID used already", 'new': False})
+
+    if project_collection.insert_one(project):
+        return jsonify({'msg': "New Project Created", 'new': True})
+    
+    return jsonify({'msg': "Unable to create project", 'new': False})
+   
+@app.route("/api/deleteProject/<projectName>/<projectID>", methods = ['GET','POST'])
+def deleteProject(projectName, projectID):
+    if project_collection.find_one({'projectID': projectID}):
+        project_collection.delete_one({'projectID': projectID})
+    return jsonify({'msg': "Project \"" + projectName + "\" deleted", 'new': True})
 
 
 if __name__ == '__main__':
