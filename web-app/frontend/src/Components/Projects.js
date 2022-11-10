@@ -9,7 +9,7 @@ import { Link, useNavigate} from 'react-router-dom';
 
 const Projects = ({ projects, removeProject, updateProject }) => {
   const [edit, setEdit] = useState({
-    name: '',
+    name: "",
     id: null,
     description: "",
     authorized: ""

@@ -36,8 +36,8 @@ function ProjectsForm(props) {
           if(str == true){
             props.onSubmit({
               id: project.projectId,
-              text: project.name,
-              name: project.name,
+              text: project.projectName,
+              name: project.projectName,
               authorized: project.authorized,
               description: project.description
               
