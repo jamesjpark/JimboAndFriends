@@ -50,13 +50,21 @@ https://stackabuse.com/get-request-query-parameters-with-flask/
 
 Goals:
 Making backend to connect to made front end components
-
+Connecting Users to database
+Encryption of Passwords and UserIDs
 
 ## Sprint 6 10/27-11/3
+##### HW7 Testing(11/3)
 
 Goals:
-Deployment of application
+Deployment of application to Heroku
+Connecting Projects and Hardware to backend and database
+Adding new inputs to project creation
 
+## Sprint 7 11/4-11/11
 
-
+Goals:
+Finishing touches and style
+Finish Checkpoint 2 Requirements
+Deploy new changes to Heroku
 
