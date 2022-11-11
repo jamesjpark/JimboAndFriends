@@ -6,6 +6,7 @@ import axios from "axios";
 
 
 function HWSet(props) {
+
   const [input, setInput] = useState(0);
   const [value, setValue] = useState(0);
 
@@ -13,6 +14,18 @@ function HWSet(props) {
   const [value2, setValue2] = useState(0);
 
   const [hw, setHW] = useState(1);
+
+ 
+  useEffect(() => {
+    axios.get("http://127.0.0.1:5000/api/getHW/"+props.project.projectID).then(
+        res => {
+          console.log(res.data)
+          setValue(res.data['hw1'])
+          setValue2(res.data['hw2'])
+        }
+      )
+    
+  }, []);
 
   function handleChange(event, param){
     let result = event.target.value.replace(/\D/g, '');
