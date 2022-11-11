@@ -11,18 +11,14 @@ app = Flask(__name__,static_folder= './build', static_url_path='/')
 CORS(app)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
-
 ca = certifi.where()
 CONNECTION_STRING = "mongodb+srv://hloo:n63KLSdtzC02ZjVa@jimboandfriends.gul6vvc.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(CONNECTION_STRING, tlsCAFile=ca)
+
 db = client['App']
 user_collection = db["Users"]
 project_collection = db["Projects"]
 authorized_collection = db["Authorized Users"]
-
-
-inventory = {}
-joined = -1
 
 @app.route("/")
 def index():
@@ -57,7 +53,6 @@ def checkIn_Hardware(projectID: int, hwSet: int, qty: int):
             }
     else:
         return jsonify({'error': 'project does not exist'}), 400
-
 
     return jsonify(ret)
 
@@ -114,6 +109,7 @@ def leaveProject(projectId: int):
 
 
 @app.route('/api/login/<username>/<password>/<userID>', methods = ['GET','POST'])
+@cross_origin()
 def login(username, password, userID):
     user = user_collection.find_one({
         'username': username
@@ -127,8 +123,8 @@ def login(username, password, userID):
     return jsonify({'msg': "User or password incorrect", 'login': False})
 
 
-
 @app.route('/api/signup/<userName>/<password>/<userID>', methods = ['GET','POST'])
+@cross_origin()
 def signUp(userName, password, userID):
     user = {
         'username': userName,
@@ -146,6 +142,7 @@ def signUp(userName, password, userID):
 
 
 @app.route('/api/newProject/<projectName>/<int:projectID>/<description>/<authorized>', methods = ['POST'])
+@cross_origin()
 def newProject(projectName, projectID, description, authorized):
     project = {
         'projectName': projectName,
@@ -164,28 +161,29 @@ def newProject(projectName, projectID, description, authorized):
     
     return jsonify({'msg': "Unable to create project", 'new': False})
    
-@app.route("/api/deleteProject/<projectName>/<projectID>", methods = ['GET','POST'])
+
+@app.route("/api/deleteProject/<projectName>/<int:projectID>", methods = ['GET','POST'])
+@cross_origin()
 def deleteProject(projectName, projectID):
+    
     if project_collection.find_one({'projectID': projectID}):
         project_collection.delete_one({'projectID': projectID})
     return jsonify({'msg': "Project \"" + projectName + "\" deleted", 'new': True})
 
 
 @app.route('/api/projectsList', methods = ['GET'])
+@cross_origin()
 def projectsList():
-
     cursor = project_collection.find()
     list_cur = list(cursor)
+    list_cur.reverse()
     json_data = json.dumps(list_cur, default=str)
+    
+    
     return json_data
-   
-
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
 
-
-#from user import routes
 
 
 

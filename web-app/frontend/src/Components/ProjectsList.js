@@ -7,6 +7,10 @@ import axios from "axios";
 function ProjectsList() {
   const [projects, setProjects] = useState([]);
 
+  function refreshPage() {
+    window.location.reload(false);
+  }
+  
   useEffect(() => {
     axios.get("http://127.0.0.1:5000/api/projectsList").then(
         res => {
@@ -18,18 +22,17 @@ function ProjectsList() {
   }, []);
 
   const addProject = project => {
-    if (!project.projectName || /^\s*$/.test(project.projectName)) {
+    if (!project.name || /^\s*$/.test(project.name)) {
       return;
     }
-
     const newProjects = [project, ...projects];
-
+    refreshPage()
     setProjects(newProjects);
     console.log(...projects);
   };
 
   const updateProject = (projectId, newValue) => {
-    if (!newValue.projectName || /^\s*$/.test(newValue.projectName)) {
+    if (!newValue.text || /^\s*$/.test(newValue.text)) {
       return;
     }
 
@@ -38,12 +41,14 @@ function ProjectsList() {
 
 
   function removeProject(id, name) { 
-    axios.get("http://127.0.0.1:5000/api/deleteProject/" + name+ "/"+ id ).then(
+    axios.post("http://127.0.0.1:5000/api/deleteProject/" + name+ "/"+ id ).then(
         res => {
           alert(res.data.msg)
           
         }
-      )
+    )
+
+    refreshPage();
     const removedArr = [...projects].filter(project => project.id !== id);
     setProjects(removedArr);
   };
@@ -56,7 +61,10 @@ function ProjectsList() {
       PROJECTS
       </h1>
       <ProjectsForm 
-        onSubmit={addProject} />
+        onSubmit={addProject} 
+        setProjects = {setProjects}
+        />
+        
       <Projects
         projects={projects}
         removeProject={removeProject}

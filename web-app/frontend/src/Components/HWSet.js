@@ -28,35 +28,6 @@ function HWSet(props) {
   
   ///////HWSET1
 
-  useEffect(() => {
-    // Using fetch to fetch the api from 
-    // flask server it will be redirected to proxy
-    fetch("/checkIn/<projectId>/<qty>").then((res) =>
-        res.json().then((data) => {
-            // Setting a data from api
-            sethardware1({
-                projectId: data[0],
-                quantity: data[1]
-                
-            });
-        })
-    );
-  }, []);
-
-  useEffect(() => {
-    // Using fetch to fetch the api from 
-    // flask server it will be redirected to proxy
-    fetch("/checkOut/<projectId>/<qty>").then((res) =>
-        res.json().then((data) => {
-            // Setting a data from api
-            sethardware1({
-                projectId: data[0],
-                quantity: data[1]
-                
-            });
-        })
-    );
-  }, []);
 
   const handleChange = e => {
     let result = e.target.value.replace(/\D/g, '');

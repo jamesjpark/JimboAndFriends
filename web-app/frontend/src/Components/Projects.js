@@ -39,8 +39,8 @@ const Projects = ({ projects, removeProject, updateProject }) => {
       key={index}
     >
      
-      <div key={project.id} className = "Project-Name">
-        {project.text}
+      <div key={project.projectID} className = "Project-Name">
+        {project.projectName}
       </div>
       
       <Authorized project = {project}/>
@@ -49,11 +49,11 @@ const Projects = ({ projects, removeProject, updateProject }) => {
       
       <div className='icons'>
         <RiCloseCircleLine
-          onClick={() => removeProject(project.id, project.text)}
+          onClick={() => removeProject(project.projectID, project.projectName)}
           className='delete-icon'
         />
         <TiEdit
-          onClick={() => setEdit({ id: project.id, name: project.text })}
+          onClick={() => setEdit({ id: project.projectID, name: project.projectName })}
           className='edit-icon'
         />
       </div>
