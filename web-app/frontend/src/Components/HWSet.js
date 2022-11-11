@@ -8,181 +8,146 @@ import axios from "axios";
 function HWSet(props) {
   const [input, setInput] = useState(0);
   const [value, setValue] = useState(0);
-  let num = input;
 
   const [input2, setInput2] = useState(0);
   const [value2, setValue2] = useState(0);
-  let num2 = input;
 
-  const [open, setOpen] = useState(false);
+  const [hw, setHW] = useState(1);
 
-  const [hardware1, sethardware1] = useState({
-      projectId: "",
-      quantity: 0
-  });
-  const [hardware2, sethardware2] = useState({
-      projectId: "",
-      quantity: 0
-  });
-  
-  
-  ///////HWSET1
-
-
-  const handleChange = e => {
-    let result = e.target.value.replace(/\D/g, '');
-    num = result;
-    setInput(result);
-    
-    
-  };
-
-  const handleCheckIn = e => {
-    
-    setOpen(true);
-    e.preventDefault();
-    let num1 = value+Number.parseInt(input);
-    if(num1>100){
-        setValue(100);
+  function handleChange(event, param){
+    let result = event.target.value.replace(/\D/g, '');
+    if(param==1){
+      setInput(result);
     }
     else{
-        if(isNaN(num1)){
-          setValue(0);
-        }
-        else{
-          setValue(num1);
-        }
+      setInput2(result);
+    }
+    
+  }
+  
+  function handleCheckIn(event, param){
+    event.preventDefault()
+    let num = 0
+    if(param==1){
+      num = input
+    }
+    else{
+      num = input2
+    }
+    axios.get("http://127.0.0.1:5000/api/checkIn/"+ props.project.projectID +"/"+param+"/"+num)
+    .then(
+        res => {
+          console.log(res.data.qty)
+          if(param==1){
+            setValue(res.data.qty)
+            if(res.data.value===100){
+              setValue(100)
+              alert("Checked In value exceed HWSet1 capacity")
+            }
+          }
+          else{
+            setValue2(res.data.qty)
+            if(res.data.value===100){
+              setValue2(100)
+              alert("Checked In value exceed HWSet1 capacity")
+            }
+          }
           
-    }
-    
-    setInput('');
-    //navigate("/checkIn")
-  };
+        }
+        
+      )
+      
+      setInput("")
+      setInput2("")
 
-  const handleCheckOut = e => {
-    
-    setOpen(true);
-    e.preventDefault();
-    let num1 = value-Number.parseInt(input);
-    if(num1<0){
-        setValue(0);
+  }
+  
+  function handleCheckOut(event, param){
+    event.preventDefault()
+    let num = 0
+    if(param==1){
+      num = input
     }
     else{
-      if(isNaN(num1)){
-        setValue(0);
-      }
-      else{
-        setValue(num1);
-      }
+      num = input2
     }
-    
-    setInput('');
-    //navigate("/checkOut")
-  };
+    axios.get("http://127.0.0.1:5000/api/checkOut/"+ props.project.projectID +"/"+param+"/"+num)
+    .then(
+        res => {
+          
+          console.log(res.data.qty)
+          if(param==1){
+            setValue(res.data.qty)
+            if(res.data.value===0){
+              setValue(0)
+              alert("Checked Out value exceeds HWSet1 quantity")
+            }
+          }
+          else{
+            setValue2(res.data.qty)
+            if(res.data.value===0){
+              setValue2(0)
+              alert("Checked Out value exceeds HWSet1 quantity")
+            }
+          }
+          
+        }
+        
+      )
+      .catch(error => {
+        
+        alert("Total checked out exceeds HWSet1 Quantity")
+        return error;
+      });
+      setInput("")
+      setInput2("")
 
-  ///////HWSET2
-  const handleChange2 = e => {
-    let result = e.target.value.replace(/\D/g, '');
-    num2 = result;
-    setInput2(result);
-    
-    
-  };
-
-  const handleCheckIn2 = e => {
-    
-    setOpen(true);
-    e.preventDefault();
-    let num2 = value2+Number.parseInt(input2);
-    if(num2>100){
-        setValue2(100);
-    }
-    else{
-      if(isNaN(num2)){
-        setValue(0);
-      }
-      else{
-        setValue(num2);
-      }
-    }
-   
-    setInput2('');
-  };
-
-  const handleCheckOut2 = e => {
-   
-    setOpen(true);
-    e.preventDefault();
-    let num2 = value2-Number.parseInt(input2);
-    if(num2<0){
-        setValue2(0);
-    }
-    else{
-      if(isNaN(num2)){
-        setValue(0);
-      }
-      else{
-        setValue(num2);
-      }
-    }
-    
-
-    setInput2('');
-  };
-
+  }
 
 
 
   return (
     <div>
-      <form className = "HWSET">
+      <form className = "HWSET1">
       HWSET1 {value}/100
       <input
             placeholder='Enter Qty'
             name='text'
             className='HWSET-Input'
-            onChange = {handleChange}
+            onChange = {event => handleChange(event, 1)}
             value = {input}
             
           />
 
-      <button className = "check" onClick = {handleCheckIn}>
+      <button className = "check" onClick = {event => handleCheckIn(event, 1)} >
         Check In
       </button>
-      {open ? <Popup text= "hardware checked in" closePopup={() => setOpen(false)} text2 = {num}/>: null}
-      
 
-      <button className = "check" onClick = {handleCheckOut}>
+      <button className = "check" onClick = {event => handleCheckOut(event, 1)}>
         Check Out
       </button>
-      {open ? <Popup text= "hardware checked out" closePopup={() => setOpen(false)}  text2 = {num}/> : null}
       </form>
 
 
-
-
-      <form className = "HWSET">
+      <form className = "HWSET2">
       HWSET2 {value2}/100
       <input
             placeholder='Enter Qty'
             name='text'
             className='HWSET-Input'
-            onChange = {handleChange2}
+            onChange = {event => handleChange(event, 2)}
             value = {input2}
           />
 
-      
-      <button className = "check" onClick = {handleCheckIn2}>
-        Check In
+      <button className = "check" onClick = {event => handleCheckIn(event, 2)}>
+        Check In 
       </button>
-      {open ? <Popup text= "hardware checked in" closePopup={() => setOpen(false)} text2 = {num2}/> : null}
-
-      <button className = "check" onClick = {handleCheckOut2}>
+    
+      <button className = "check" onClick = {event => handleCheckOut(event, 2)}>
         Check Out
       </button>
-      {open ? <Popup text= "hardware checked out" closePopup={() => setOpen(false)} text2 = {num2}/> : null}
+     
       
-
       </form>
       
     </div>

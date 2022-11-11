@@ -52,10 +52,10 @@ const Projects = ({ projects, removeProject, updateProject }) => {
           onClick={() => removeProject(project.projectID, project.projectName)}
           className='delete-icon'
         />
-        <TiEdit
+        {/* <TiEdit
           onClick={() => setEdit({ id: project.projectID, name: project.projectName })}
           className='edit-icon'
-        />
+        /> */}
       </div>
     </div>
   ));

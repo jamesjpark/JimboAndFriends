@@ -39,7 +39,13 @@ def checkIn_Hardware(projectID: int, hwSet: int, qty: int):
         currentQty = project[setNumber]
         
         if currentQty + qty > maxQty:
-            return jsonify({'error': 'total qty exceeds maxQty'}), 400
+            doc = project_collection.find_one_and_update(
+                {"projectID" : projectID},
+                {"$set":
+                    {setNumber: maxQty}
+                },upsert=True
+            )
+            return jsonify({'error': 'total qty exceeds maxQty', 'value': 100})
         else:
             doc = project_collection.find_one_and_update(
                 {"projectID" : projectID},
@@ -67,7 +73,15 @@ def checkOut_hardWare(projectID: int, hwSet: int, qty: int):
     if project is not None:
         currentQty = project[setNumber]        
         if qty > currentQty:
-            qty = currentQty
+            doc = project_collection.find_one_and_update(
+                { "projectID" : projectID},
+                {"$set":
+                    {setNumber: 0}
+                },upsert=True
+                )
+            return jsonify({'error': 'checkout exceeds current quantity', 'value': 0})
+        
+
         doc = project_collection.find_one_and_update(
             {"projectID" : projectID},
             {"$set":
