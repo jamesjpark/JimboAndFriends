@@ -195,9 +195,15 @@ def projectsList():
     list_cur = list(cursor)
     list_cur.reverse()
     json_data = json.dumps(list_cur, default=str)
-    
-    
     return json_data
+
+@app.route('/api/getHW/<int:projectID>', methods = ['GET'])
+@cross_origin()
+def getHW(projectID):
+    project = project_collection.find_one({'projectID': projectID})
+    json_data = json.dumps(project, default=str)
+    return json_data
+   
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
 
