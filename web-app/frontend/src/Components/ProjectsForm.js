@@ -5,13 +5,17 @@ import axios from "axios";
 
 function ProjectsForm(props) {
   const [input, setInput] = useState(props.edit ? props.edit.name : '');
-  
+  function refreshPage() {
+    window.location.reload(false);
+  }
   const [project, setProject] = useState({
     name: "",
     projectId: "",
     description: "",
     authorized: ""
   })
+
+
   let str = false;
   const inputRef = useRef(null);
 
@@ -28,7 +32,7 @@ function ProjectsForm(props) {
     //console.log(props.edit.value);
     if(project.name&&project.projectId&&project.authorized){
       
-      axios.get("http://127.0.0.1:5000/api/newProject/" + project.name + "/" + project.projectId+ "/" +project.description + "/"+ project.authorized).then(
+      axios.post("http://127.0.0.1:5000/api/newProject/" + project.name + "/" + project.projectId+ "/" +project.description + "/"+ project.authorized).then(
         res => {
           alert(res.data.msg)
           str = res.data.new
@@ -36,7 +40,6 @@ function ProjectsForm(props) {
           if(str == true){
             props.onSubmit({
               id: project.projectId,
-              text: project.projectName,
               name: project.projectName,
               authorized: project.authorized,
               description: project.description
@@ -44,9 +47,19 @@ function ProjectsForm(props) {
             });
             str = false;
           }
+          
         }
       )
+      .then(
+        axios.get("http://127.0.0.1:5000/api/projectsList").then(
+        res => {
+          console.log(res.data)
+          props.setProjects(res.data)
+        }
+      )
+      )
       
+      refreshPage();
       setInput('');
       setProject({
         name: "",
