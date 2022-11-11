@@ -12,7 +12,7 @@ function ProjectsList() {
   }
   
   useEffect(() => {
-    axios.get("http://127.0.0.1:5000/api/projectsList").then(
+    axios.get(process.env.REACT_APP_API + "api/projectsList").then(
         res => {
           console.log(res.data)
           setProjects(res.data)
@@ -41,7 +41,7 @@ function ProjectsList() {
 
 
   function removeProject(id, name) { 
-    axios.post("http://127.0.0.1:5000/api/deleteProject/" + name+ "/"+ id ).then(
+    axios.post(process.env.REACT_APP_API + "api/deleteProject/" + name+ "/"+ id ).then(
         res => {
           alert(res.data.msg)
           

@@ -46,7 +46,7 @@ function ProjectsForm(props) {
     //console.log(props.edit.value);
     if(project.name&&project.projectId&&project.authorized){
       
-      axios.post("http://127.0.0.1:5000/api/newProject/" + project.name + "/" + project.projectId+ "/" +project.description + "/"+ project.authorized).then(
+      axios.post(process.env.REACT_APP_API + "api/newProject/" + project.name + "/" + project.projectId+ "/" +project.description + "/"+ project.authorized).then(
         res => {
           alert(res.data.msg)
           str = res.data.new
@@ -67,7 +67,7 @@ function ProjectsForm(props) {
         }
       )
       .then(
-        axios.get("http://127.0.0.1:5000/api/projectsList").then(
+        axios.get(process.env.REACT_APP_API + "api/projectsList").then(
         res => {
           console.log(res.data)
           props.setProjects(res.data)

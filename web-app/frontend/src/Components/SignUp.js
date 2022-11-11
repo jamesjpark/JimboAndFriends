@@ -45,7 +45,7 @@ function SignUp(props) {
     
     function onSignup(event){
       console.log(loginForm)
-      axios.get("http://127.0.0.1:5000/api/signup/" + loginForm.userName + "/" + loginForm.password+ "/" +loginForm.userID).then(
+      axios.get(process.env.REACT_APP_API + "api/signup/" + loginForm.userName + "/" + loginForm.password+ "/" +loginForm.userID).then(
         res => {
           alert(res.data.msg)
           navigate("/")

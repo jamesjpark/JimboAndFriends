@@ -34,7 +34,7 @@ function HWSet(props) {
     else{
       num = input2
     }
-    axios.get("http://127.0.0.1:5000/api/checkIn/"+ props.project.projectID +"/"+param+"/"+num)
+    axios.get(process.env.REACT_APP_API + "api/checkIn/"+ props.project.projectID +"/"+param+"/"+num)
     .then(
         res => {
           console.log(res.data.qty)
@@ -71,7 +71,7 @@ function HWSet(props) {
     else{
       num = input2
     }
-    axios.get("http://127.0.0.1:5000/api/checkOut/"+ props.project.projectID +"/"+param+"/"+num)
+    axios.get(process.env.REACT_APP_API + "api/checkOut/"+ props.project.projectID +"/"+param+"/"+num)
     .then(
         res => {
           
