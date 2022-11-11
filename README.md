@@ -62,9 +62,13 @@ Connecting Projects and Hardware to backend and database <br />
 Adding new inputs to project creation <br />
 
 ## Sprint 7 11/4-11/11
+![Screen Shot 2022-11-11 at 11 13 47 AM](https://user-images.githubusercontent.com/61858661/201393906-95a1cb0a-3bb1-4b16-94c1-65d41b9c631d.png)
+![Screen Shot 2022-11-11 at 11 14 03 AM](https://user-images.githubusercontent.com/61858661/201393917-d0083928-3f8d-4108-92b7-d22d84739316.png)
+![Screen Shot 2022-11-11 at 11 14 10 AM](https://user-images.githubusercontent.com/61858661/201393925-4f2685df-0f60-4779-a6aa-320be6c2f9a4.png)
 
 Goals:
 Finishing touches and style <br />
 Finish Checkpoint 2 Requirements <br />
+
 Deploy new changes to Heroku <br />
 
