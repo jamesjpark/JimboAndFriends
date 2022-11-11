@@ -42,7 +42,7 @@ Link Navigation and Router in React: https://www.copycat.dev/blog/react-js-navig
 https://medium.com/@akhilmaulloo/the-fremp-stack-building-a-full-stack-web-application-91308e505250
 
 Goals:
-Front End development: signup page, login page, projects page, styling
+Front End development: signup page, login page, projects page, styling <br />
 ![Screen Shot 2022-11-11 at 11 16 32 AM](https://user-images.githubusercontent.com/61858661/201394357-38d8fc08-6d60-4960-856f-243c93e23688.png)
 
 ## Sprint 5 10/19-10/26
