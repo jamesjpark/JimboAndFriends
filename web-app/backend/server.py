@@ -8,7 +8,7 @@ from passlib.hash import sha256_crypt
 from bson.json_util import dumps
 
 app = Flask(__name__,static_folder= './build', static_url_path='/')
-CORS(app)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 ca = certifi.where()
@@ -21,6 +21,7 @@ project_collection = db["Projects"]
 authorized_collection = db["Authorized Users"]
 
 @app.route("/")
+@cross_origin()
 def index():
     print("ERHRERERE")
     return app.send_static_file('index.html')
@@ -162,6 +163,7 @@ def newProject(projectName, projectID, description, authorized):
     return jsonify({'msg': "Unable to create project", 'new': False})
    
 
+
 @app.route("/api/deleteProject/<projectName>/<int:projectID>", methods = ['GET','POST'])
 @cross_origin()
 def deleteProject(projectName, projectID):
@@ -169,6 +171,7 @@ def deleteProject(projectName, projectID):
     if project_collection.find_one({'projectID': projectID}):
         project_collection.delete_one({'projectID': projectID})
     return jsonify({'msg': "Project \"" + projectName + "\" deleted", 'new': True})
+
 
 
 @app.route('/api/projectsList', methods = ['GET'])
@@ -183,7 +186,6 @@ def projectsList():
     return json_data
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
-
 
 
 
