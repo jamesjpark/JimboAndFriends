@@ -32,10 +32,10 @@ function ProjectsList() {
   };
 
   const updateProject = (projectId, newValue) => {
-    if (!newValue.text || /^\s*$/.test(newValue.text)) {
+    
+    if (!newValue.name || /^\s*$/.test(newValue.name)) {
       return;
     }
-
     setProjects(prev => prev.map(item => (item.id === projectId ? newValue : item)));
   };
 

@@ -8,6 +8,7 @@ function ProjectsForm(props) {
   function refreshPage() {
     window.location.reload(false);
   }
+  
   const [project, setProject] = useState({
     name: "",
     projectId: "",
@@ -25,6 +26,19 @@ function ProjectsForm(props) {
     setProject(prevNote => ({
         ...prevNote, [name]: value})
   )};
+  
+  function handleUpdate(event){
+    event.preventDefault();
+    props.onSubmit({
+      text: project.projectName,
+      name: project.projectName,
+      id: project.projectId,
+      description: project.description,
+      authorized: project.authorized
+      
+      
+    });
+  }
 
   function handleSubmit(event) { 
     event.preventDefault();
@@ -39,10 +53,12 @@ function ProjectsForm(props) {
           
           if(str == true){
             props.onSubmit({
-              id: project.projectId,
+              text: project.projectName,
               name: project.projectName,
-              authorized: project.authorized,
-              description: project.description
+              id: project.projectId,
+              description: project.description,
+              authorized: project.authorized
+              
               
             });
             str = false;
@@ -89,7 +105,7 @@ function ProjectsForm(props) {
             name='text'
            
           />
-          <button onClick={handleSubmit} className='project-button edit'>
+          <button onClick={handleUpdate} className='project-button edit'>
             Update Project
           </button>
         </>
