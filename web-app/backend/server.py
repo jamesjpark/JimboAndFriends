@@ -23,7 +23,6 @@ authorized_collection = db["Authorized Users"]
 @app.route("/")
 @cross_origin()
 def index():
-    print("ERHRERERE")
     return app.send_static_file('index.html')
 
 
@@ -203,7 +202,12 @@ def getHW(projectID):
     project = project_collection.find_one({'projectID': projectID})
     json_data = json.dumps(project, default=str)
     return json_data
-   
+
+@app.errorhandler(404)
+def not_found(e):
+    return app.send_static_file('index.html')
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
 

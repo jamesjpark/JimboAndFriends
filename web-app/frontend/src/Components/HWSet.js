@@ -17,7 +17,7 @@ function HWSet(props) {
 
  
   useEffect(() => {
-    axios.get("http://127.0.0.1:5000/api/getHW/"+props.project.projectID).then(
+    axios.get(process.env.REACT_APP_API + "api/getHW/"+props.project.projectID).then(
         res => {
           console.log(res.data)
           setValue(res.data['hw1'])
