@@ -3,12 +3,12 @@ EE461L Web Application Projet by Brandon Vu, Hao-Zhe Loo, Joonha Park, Srishaan 
 
 
 
-## Checkpoint 1
+# Checkpoint 1
 [Checkpoint 1 Document](https://docs.google.com/document/d/13tEbrVV1XnsT6WM8rLi5gIoCUGzmAdGeV9bU5C600cM/edit?usp=sharing)
 
 
 
-## Checkpoint 2 
+# Checkpoint 2 
 ## Sprint 1 9/18-9/25
 Goals:
 Research and familiarity with javascript in React
@@ -74,7 +74,7 @@ Deployed App Link: https://jimbo-and-buddies.herokuapp.com/  <br />
 
 
 
-## Checkpoint 3
+# Checkpoint 3
 ## Sprint 8 11/12-11/19
 Goals:
 ##### HW8 GRPC(11/14)
