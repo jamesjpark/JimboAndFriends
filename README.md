@@ -70,6 +70,12 @@ Adding new inputs to project creation <br />
 Goals:
 Finishing touches and style <br />
 Finish Checkpoint 2 Requirements <br />
-
 Deploy new changes to Heroku <br />
+
+Deployed App Link: https://jimbo-and-buddies.herokuapp.com/  <br />
+
+## Sprint 8 11/12-11/19
+##### HW8 GRPC(11/14)
+
+Goals:
 
