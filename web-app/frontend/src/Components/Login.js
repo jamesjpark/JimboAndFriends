@@ -22,6 +22,7 @@ function Login(props) {
 
     function onLogin(event){
       console.log(loginForm)
+      console.log(process.env.REACT_APP_API)
       axios.get(process.env.REACT_APP_API + "api/login/" + loginForm.userName + "/" + loginForm.password + "/" +loginForm.userID).then(
         res => {
           alert(res.data.msg)
@@ -40,16 +41,9 @@ function Login(props) {
       
     }
 
-
-
     function onSignup(event){
       console.log(loginForm)
-      // axios.get("http://127.0.0.1:5000/signup/" + loginForm.userName + "/" + loginForm.password+ "/" +loginForm.userID).then(
-      //   res => {
-      //     alert(res.data.msg)
-      //     navigate("/signUp")
-      //   }
-      // )
+      
       navigate('/signUp')
       event.preventDefault()
       

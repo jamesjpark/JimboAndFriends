@@ -3,7 +3,6 @@ import axios from "axios";
 import {useNavigate} from 'react-router-dom';
 function SignUp(props) {
 
-    // axios.defaults.baseURL = ""
     const [loginForm, setloginForm] = useState({
         userName: "",
         password: "",
@@ -57,41 +56,43 @@ function SignUp(props) {
       
 
     return (
-      <div className="Signup">
-                <form>
-                    <h3>Sign Up</h3>
+      <div className="loginForm">
+        <h1>SIGNUP</h1>
+                <form className="login">
+                    
                     <div className="mb-3">
-                        <label>Username</label>
+                        
                         <input
                             name="userName"
                             type="text"
-                            className="form-control"
+                            className = "userName"
                             placeholder="username"
                             onChange={handleChange}
                         />
                     </div>
                     <div className="mb-3">
-                        <label>userID</label>
+                        
                         <input
                             name="userID"
                             type="text"
-                            className="form-control"
+                            className = "userName"
                             placeholder="userID"
                             onChange={handleChange}
                         />
                     </div>
                     <div className="mb-3">
-                        <label>Password</label>
+                        
                         <input
                             name="password"
                             type="password"
-                            className="form-control"
+                            className = "userName"
                             placeholder="Enter password"
                             onChange={handleChange}
                         />
                     </div>
-                    <div className="d-grid">
-                        <button type="submit" className="btn btn-primary" onClick = {onSignup}>
+                   
+                    <div>
+                        <button className = "signupButton" color = "primary" onClick = {onSignup}>
                             Sign Up
                         </button>
                     </div>

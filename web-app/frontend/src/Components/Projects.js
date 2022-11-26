@@ -56,7 +56,9 @@ const Projects = ({ projects, removeProject, updateProject }) => {
           onClick={() => setEdit({ id: project.projectID, name: project.projectName })}
           className='edit-icon'
         /> */}
+        
       </div>
+
     </div>
   ));
 };
