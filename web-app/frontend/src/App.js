@@ -18,9 +18,8 @@ function App() {
     <div>
       
 <BrowserRouter>
-<Header>
+<Header> </Header>
 
-</Header>
     <div className="App">
     <Routes>
     <Route exact path = "/" element = {<Login />}></Route>
