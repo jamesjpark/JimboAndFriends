@@ -6,9 +6,17 @@ from pymongo import MongoClient
 import certifi
 from passlib.hash import sha256_crypt
 from bson.json_util import dumps
+from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
+                               unset_jwt_cookies, jwt_required, JWTManager
+
+
 
 app = Flask(__name__,static_folder= './build', static_url_path='/')
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+app.config["JWT_SECRET_KEY"] = "please-remember-to-change-me"
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+jwt = JWTManager(app)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 ca = certifi.where()
@@ -24,7 +32,6 @@ authorized_collection = db["Authorized Users"]
 @cross_origin()
 def index():
     return app.send_static_file('index.html')
-
 
 @app.route("/api/checkIn/<int:projectID>/<int:hwSet>/<int:qty>", methods=['GET'])
 @cross_origin()
@@ -128,13 +135,38 @@ def login(username, password, userID):
     user = user_collection.find_one({
         'username': username
     })
-
+    access_token = create_access_token(identity=userID)
     if user:
         if sha256_crypt.verify(userID, user['userID']):
             if sha256_crypt.verify(password, user['password']):
-                return jsonify({'msg': "Logged in", 'login': True})
+                return jsonify({'msg': "Logged in", 'login': True, 'token': access_token})
 
-    return jsonify({'msg': "User or password incorrect", 'login': False})
+    return jsonify({'msg': "User or password incorrect", 'login': False, 'token': ""})
+
+
+@app.route('/api/logout', methods = ['GET','POST'])
+@cross_origin()
+def logout():
+    response = jsonify({"msg": "logout successful"})
+    unset_jwt_cookies(response)
+    return response
+
+@app.after_request
+def refresh_expiring_jwts(response):
+    try:
+        exp_timestamp = get_jwt()["exp"]
+        now = datetime.now(timezone.utc)
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+        if target_timestamp > exp_timestamp:
+            access_token = create_access_token(identity=get_jwt_identity())
+            data = response.get_json()
+            if type(data) is dict:
+                data["token"] = access_token 
+                response.data = json.dumps(data)
+        return response
+    except (RuntimeError, KeyError):
+        # Case where there is not a valid JWT. Just return the original respone
+        return response
 
 
 @app.route('/api/signup/<userName>/<password>/<userID>', methods = ['GET','POST'])
@@ -195,6 +227,9 @@ def projectsList():
     list_cur.reverse()
     json_data = json.dumps(list_cur, default=str)
     return json_data
+
+
+
 
 @app.route('/api/getHW/<int:projectID>', methods = ['GET'])
 @cross_origin()
