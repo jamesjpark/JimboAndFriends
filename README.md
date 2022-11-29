@@ -80,5 +80,7 @@ Goals:
 Functionality for certain elements(join button) <br />
 Styling on header and signup page <br />
 Get authorized users formated for multiple users and functionality <br />
+
+Refresh: https://stackoverflow.com/questions/38256256/reactjs-page-refreshing-upon-onclick-handle-of-button <br />
 ##### HW8 GRPC(11/14)
 
