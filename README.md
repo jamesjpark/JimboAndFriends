@@ -77,5 +77,8 @@ Deployed App Link: https://jimbo-and-buddies.herokuapp.com/  <br />
 # Checkpoint 3
 ## Sprint 8 11/12-11/19
 Goals:
+Functionality for certain elements(join button) <br />
+Styling on header and signup page <br />
+Get authorized users formated for multiple users and functionality <br />
 ##### HW8 GRPC(11/14)
 
