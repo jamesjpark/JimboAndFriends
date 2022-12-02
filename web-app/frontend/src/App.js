@@ -13,12 +13,13 @@ import './App.css'
 function App() {
   
   const { token, removeToken, setToken } = useToken();
-  
+  const { userName, setUserName} = useState(true);
+
   return (
     <div>
       
-<BrowserRouter>
-<Header> </Header>
+    <BrowserRouter>
+    <Header user = {userName}> </Header>
 
     <div className="App">
     <Routes>
