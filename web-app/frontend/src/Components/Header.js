@@ -7,8 +7,11 @@ import SearchIcon from '@mui/icons-material/Search';
 
 function Header(props) {
   const navigate = useNavigate();
-
+  let c = props.user;
+  
+  console.log(c);
     return(
+      
       <AppBar position="static">
       <Toolbar className="b">
         <Typography variant="h5" className="App-header">

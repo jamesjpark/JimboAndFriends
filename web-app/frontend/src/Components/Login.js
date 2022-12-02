@@ -36,17 +36,11 @@ function Login(props) {
         }
       )
       event.preventDefault()
-      
-      
-      
     }
-
     function onSignup(event){
       console.log(loginForm)
-      
       navigate('/signUp')
       event.preventDefault()
-      
     }
       
 
@@ -75,7 +69,7 @@ function Login(props) {
                   placeholder="UserID" 
                   value={loginForm.userID} />
         <div>
-        <div >
+        <div data-testid = "login-1">
         <button className = "loginButton" color = "primary" onClick={onLogin} > Login</button>
         </div>
        

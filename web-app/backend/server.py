@@ -178,7 +178,7 @@ def signUp(userName, password, userID):
         'userID': sha256_crypt.encrypt(userID)  
     }
     
-    if user_collection.find_one({'userID': userID}):
+    if user_collection.find_one({'userID': user['userID']}):
         return jsonify({'msg': "UserID used already"})
 
     if user_collection.insert_one(user):
@@ -227,9 +227,6 @@ def projectsList():
     list_cur.reverse()
     json_data = json.dumps(list_cur, default=str)
     return json_data
-
-
-
 
 @app.route('/api/getHW/<int:projectID>', methods = ['GET'])
 @cross_origin()
