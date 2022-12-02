@@ -1,6 +1,7 @@
 import React,{ useState, useEffect} from 'react';
 import axios from "axios";
 import {useNavigate} from 'react-router-dom';
+import useToken from './useToken';
 
 function Login(props) {
 
@@ -9,6 +10,10 @@ function Login(props) {
         password: "",
         userID: ""
     })
+
+    const [token, setToken] = useState({
+      token: ""
+  })
 
     const navigate = useNavigate();
     let str = false;
@@ -23,11 +28,15 @@ function Login(props) {
     function onLogin(event){
       console.log(loginForm)
       console.log(process.env.REACT_APP_API)
-      axios.get(process.env.REACT_APP_API + "api/login/" + loginForm.userName + "/" + loginForm.password + "/" +loginForm.userID).then(
+      axios.get(process.env.REACT_APP_API + "api/login/" + loginForm.userName + "/" + loginForm.password + "/" +loginForm.userID)
+      .then(
         res => {
           alert(res.data.msg)
           //setLoggedIn(res.data.login)
           str = res.data.login
+          localStorage.setItem('token', res.data.token)
+          axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+
           
           if(str === true){
             navigate("/projects")

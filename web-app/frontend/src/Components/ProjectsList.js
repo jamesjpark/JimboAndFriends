@@ -40,15 +40,16 @@ function ProjectsList() {
   };
 
 
-  function removeProject(id, name) { 
-    axios.post(process.env.REACT_APP_API + "api/deleteProject/" + name+ "/"+ id ).then(
+  function removeProject(id, name) {
+    console.log(localStorage.getItem('token'))
+    axios.post(process.env.REACT_APP_API + "api/deleteProject/" + name+ "/"+ id).then(
         res => {
-          alert(res.data.msg)
+          alert(res.data)
           
         }
     )
 
-    refreshPage();
+    // refreshPage();
     const removedArr = [...projects].filter(project => project.id !== id);
     setProjects(removedArr);
   };

@@ -6,7 +6,7 @@ from pymongo import MongoClient
 import certifi
 from passlib.hash import sha256_crypt
 from bson.json_util import dumps
-from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
+from flask_jwt_extended import current_user, create_access_token,get_jwt,get_jwt_identity, \
                                unset_jwt_cookies, jwt_required, JWTManager
 
 
@@ -15,7 +15,7 @@ app = Flask(__name__,static_folder= './build', static_url_path='/')
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 app.config["JWT_SECRET_KEY"] = "please-remember-to-change-me"
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=12)
 jwt = JWTManager(app)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -27,6 +27,18 @@ db = client['App']
 user_collection = db["Users"]
 project_collection = db["Projects"]
 authorized_collection = db["Authorized Users"]
+
+@jwt.user_lookup_loader
+def user_lookup_callback(_jwt_header, jwt_data):
+    identity = jwt_data["sub"]
+    return user_collection.find_one({
+        'username': identity
+    })['username']
+
+@jwt.user_identity_loader
+def user_identity_lookup(user):
+    return user
+
 
 @app.route("/")
 @cross_origin()
@@ -210,12 +222,17 @@ def newProject(projectName, projectID, description, authorized):
 
 
 @app.route("/api/deleteProject/<projectName>/<int:projectID>", methods = ['GET','POST'])
+@jwt_required()
 @cross_origin()
 def deleteProject(projectName, projectID):
-    
-    if project_collection.find_one({'projectID': projectID}):
-        project_collection.delete_one({'projectID': projectID})
-    return jsonify({'msg': "Project \"" + projectName + "\" deleted", 'new': True})
+    print(current_user)
+    ret = {
+        "user" : current_user
+    }
+    return jsonify(ret), 200
+    # if project_collection.find_one({'projectID': projectID}):
+    #     project_collection.delete_one({'projectID': projectID})
+    # return jsonify({'msg': "Project \"" + projectName + "\" deleted", 'new': True})
 
 
 
