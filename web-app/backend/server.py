@@ -257,14 +257,17 @@ def updateProject(projectName, projectID, description):
         'hw2' : 0,
         'owner' : current_user['username']
     }
-    
-    if project_collection.find_one_and_update({'projectID': projectID}):
-        return jsonify({'msg': "ProjectID used already", 'new': False})
-
-    if project_collection.insert_one(project):
-        return jsonify({'msg': "New Project Created", 'new': True})
-    
-    return jsonify({'msg': "Unable to create project", 'new': False})
+    if project_collection.find_one_and_update(
+        {'projectID' : projectID},
+        {"$set":
+                {
+                    "projectName": projectName,
+                    "description" : description
+                },
+        }, upsert=True
+    ):
+        return jsonify({'msg': "Updated project"})
+    return jsonify({'msg': "Unable to create project"})
 
 
 @app.route("/api/deleteProject/<projectName>/<int:projectID>", methods = ['GET','POST'])
