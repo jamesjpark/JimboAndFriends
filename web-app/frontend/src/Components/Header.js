@@ -9,7 +9,6 @@ function Header(props) {
   const navigate = useNavigate();
   let c = props.user;
   
-  console.log(c);
     return(
       
       <AppBar position="static">

@@ -13,7 +13,6 @@ function ProjectsForm(props) {
     name: "",
     projectId: "",
     description: "",
-    authorized: ""
   })
 
 
@@ -34,20 +33,20 @@ function ProjectsForm(props) {
       name: project.projectName,
       id: project.projectId,
       description: project.description,
-      authorized: project.authorized
-      
       
     });
   }
 
   function handleSubmit(event) { 
     event.preventDefault();
-    console.log(project);
-    //console.log(props.edit.value);
-    if(project.name&&project.projectId&&project.authorized){
-      
-      axios.post(process.env.REACT_APP_API + "api/newProject/" + project.name + "/" + project.projectId+ "/" +project.description + "/"+ project.authorized).then(
+    if(project.name&&project.projectId){
+      if(isNaN(project.projectId)){
+        alert("ProjectID is an Integer field")
+      }
+      axios.post(process.env.REACT_APP_API + "api/newProject/" + project.name + "/" + project.projectId+ "/" +project.description)
+      .then(
         res => {
+          console.log(res.data.msg)
           alert(res.data.msg)
           str = res.data.new
           
@@ -57,7 +56,6 @@ function ProjectsForm(props) {
               name: project.projectName,
               id: project.projectId,
               description: project.description,
-              authorized: project.authorized
               
               
             });
@@ -69,7 +67,6 @@ function ProjectsForm(props) {
       .then(
         axios.get(process.env.REACT_APP_API + "api/projectsList").then(
         res => {
-          console.log(res.data)
           props.setProjects(res.data)
         }
       )
@@ -81,7 +78,6 @@ function ProjectsForm(props) {
         name: "",
         projectId: "",
         description: "",
-        authorized: ""
       });
       
     }
@@ -135,14 +131,7 @@ function ProjectsForm(props) {
             className = 'project-input'
             ref={inputRef}
           />
-          <input
-            placeholder='Authorized Users'
-            onChange = {handleChange}
-            value = {project.authorized}
-            name='authorized'
-            className = 'project-input'
-            ref={inputRef}
-          />
+
 
           <button color = "primary" onClick={handleSubmit} className='project-button'>
             New Project
