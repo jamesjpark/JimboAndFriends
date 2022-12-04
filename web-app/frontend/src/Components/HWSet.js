@@ -18,7 +18,6 @@ function HWSet(props) {
   useEffect(() => {
     axios.get(process.env.REACT_APP_API + "api/getHW/"+props.project.projectID).then(
         res => {
-          console.log(res.data)
           setValue(res.data['hw1'])
           setValue2(res.data['hw2'])
         }
@@ -49,7 +48,6 @@ function HWSet(props) {
     axios.get(process.env.REACT_APP_API + "api/checkIn/"+ props.project.projectID +"/"+param+"/"+num)
     .then(
         res => {
-          console.log(res.data.qty)
           if(param==1){
             setValue(res.data.qty)
             if(res.data.value===100){
@@ -87,7 +85,6 @@ function HWSet(props) {
     .then(
         res => {
           
-          console.log(res.data.qty)
           if(param==1){
             setValue(res.data.qty)
             if(res.data.value===0){

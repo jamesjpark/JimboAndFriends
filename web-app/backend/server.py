@@ -33,7 +33,7 @@ def user_lookup_callback(_jwt_header, jwt_data):
     identity = jwt_data["sub"]
     return user_collection.find_one({
         'username': identity
-    })['username']
+    })
 
 @jwt.user_identity_loader
 def user_identity_lookup(user):
@@ -118,16 +118,27 @@ def checkOut_hardWare(projectID: int, hwSet: int, qty: int):
 
 @app.route("/api/join/<int:projectId>")
 @cross_origin()
+@jwt_required()
 def joinProject(projectId: int):
-    global current_project
-    if current_project != -1:
-        return jsonify({'error': 'already in a group'}), 400
+    print(project_collection['authorized'])
+    print(current_user)
+    project = project_collection.find_one({
+        'projectID': projectId 
+    })
+
+    authorized = project['authorized']
+    if current_user['username'] not in authorized:
+        authorized.append(current_user['username'])
     else:
-        current_project = projectId
-    ret = {
-        'projectId': current_project
-    }
-    return jsonify(ret)
+        return jsonify({"msg": "Already Joined"})
+
+    project_collection.find_one_and_update(
+        {'projectID' : projectId},
+        {"$set":
+                {"authorized": authorized}
+        }, upsert=True
+    )
+    return jsonify({"msg": "Joined successfully"})
 
 
 @app.route("/api/leave/<int:projectId>")
@@ -199,16 +210,19 @@ def signUp(userName, password, userID):
     return jsonify({'msg': "Signup failed"})
 
 
-@app.route('/api/newProject/<projectName>/<int:projectID>/<description>/<authorized>', methods = ['POST'])
+@app.route('/api/newProject/<projectName>/<int:projectID>/<description>', methods = ['POST'])
 @cross_origin()
-def newProject(projectName, projectID, description, authorized):
+@jwt_required()
+def newProject(projectName, projectID, description):
+
     project = {
         'projectName': projectName,
         'projectID': projectID,
         'description': description,
-        'authorized': authorized,
+        'authorized': [current_user['username']],
         'hw1' : 0,
-        'hw2' : 0
+        'hw2' : 0,
+        'owner' : current_user['username']
     }
     
     if project_collection.find_one({'projectID': projectID}):
@@ -225,15 +239,16 @@ def newProject(projectName, projectID, description, authorized):
 @jwt_required()
 @cross_origin()
 def deleteProject(projectName, projectID):
-    print(current_user)
-    ret = {
-        "user" : current_user
-    }
-    return jsonify(ret), 200
-    # if project_collection.find_one({'projectID': projectID}):
-    #     project_collection.delete_one({'projectID': projectID})
-    # return jsonify({'msg': "Project \"" + projectName + "\" deleted", 'new': True})
-
+    project = project_collection.find_one({'projectID' : projectID})
+    print(current_user['username'])
+    print(project['owner'])
+    if project:
+        if project['owner'] == current_user['username']:
+            project_collection.delete_one({'projectID': projectID})
+            return jsonify({'msg': "Project \"" + projectName + "\" deleted", 'new': True})
+    
+    return jsonify({'msg': "Project \"" + projectName + "\" failed to delete", 'new': True})
+    
 
 
 @app.route('/api/projectsList', methods = ['GET'])

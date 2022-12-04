@@ -14,7 +14,6 @@ function ProjectsList() {
   useEffect(() => {
     axios.get(process.env.REACT_APP_API + "api/projectsList").then(
         res => {
-          console.log(res.data)
           setProjects(res.data)
         }
       )
@@ -28,7 +27,6 @@ function ProjectsList() {
     const newProjects = [project, ...projects];
     refreshPage()
     setProjects(newProjects);
-    console.log(...projects);
   };
 
   const updateProject = (projectId, newValue) => {
@@ -41,10 +39,9 @@ function ProjectsList() {
 
 
   function removeProject(id, name) {
-    console.log(localStorage.getItem('token'))
     axios.post(process.env.REACT_APP_API + "api/deleteProject/" + name+ "/"+ id).then(
         res => {
-          alert(res.data)
+          alert(res.data.msg)
           
         }
     )
