@@ -144,7 +144,6 @@ def joinProject(projectId: int):
 @cross_origin()
 @jwt_required()
 def leaveProject(projectId: int):
-    
     project = project_collection.find_one({
         'projectID': projectId 
     })
@@ -248,15 +247,15 @@ def newProject(projectName, projectID, description):
 @jwt_required()
 def updateProject(projectName, projectID, description):
 
-    project = {
-        'projectName': projectName,
-        'projectID': projectID,
-        'description': description,
-        'authorized': [current_user['username']],
-        'hw1' : 0,
-        'hw2' : 0,
-        'owner' : current_user['username']
-    }
+    project = project_collection.find_one({
+        'projectID': projectId 
+    })
+
+    authorized = project['authorized']
+    if current_user['username'] not in authorized:
+        return jsonify({"msg": "not authorized"})
+
+    
     if project_collection.find_one_and_update(
         {'projectID' : projectID},
         {"$set":
