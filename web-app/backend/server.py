@@ -288,6 +288,7 @@ def deleteProject(projectName, projectID):
 
 @app.route('/api/projectsList', methods = ['GET'])
 @cross_origin()
+@jwt_required()
 def projectsList():
     cursor = project_collection.find()
     list_cur = list(cursor)

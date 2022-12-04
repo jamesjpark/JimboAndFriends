@@ -34,7 +34,7 @@ function Login(props) {
           alert(res.data.msg)
           //setLoggedIn(res.data.login)
           str = res.data.login
-          // localStorage.setItem('token', res.data.token)
+          localStorage.setItem('token', res.data.token)
           axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
 
           
