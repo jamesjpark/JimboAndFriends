@@ -120,8 +120,7 @@ def checkOut_hardWare(projectID: int, hwSet: int, qty: int):
 @cross_origin()
 @jwt_required()
 def joinProject(projectId: int):
-    print(project_collection['authorized'])
-    print(current_user)
+
     project = project_collection.find_one({
         'projectID': projectId 
     })
@@ -138,18 +137,29 @@ def joinProject(projectId: int):
                 {"authorized": authorized}
         }, upsert=True
     )
-    return jsonify({"msg": "Joined successfully"})
+    return jsonify({"msg": "Joined successfully", 'authorized' : authorized})
 
 
 @app.route("/api/leave/<int:projectId>")
 @cross_origin()
+@jwt_required()
 def leaveProject(projectId: int):
-    global current_project
-    current_project = -1
-    ret = {
-        'projectId': projectId
-    }
-    return jsonify(ret)
+    
+    project = project_collection.find_one({
+        'projectID': projectId 
+    })
+
+    authorized = project['authorized']
+    if current_user['username'] in authorized:
+        authorized.remove(current_user['username'])
+
+    project_collection.find_one_and_update(
+        {'projectID' : projectId},
+        {"$set":
+                {"authorized": authorized}
+        }, upsert=True
+    )
+    return jsonify({"msg": "Left successfully", 'authorized' : authorized})
 
 
 @app.route('/api/login/<username>/<password>/<userID>', methods = ['GET','POST'])
@@ -232,7 +242,29 @@ def newProject(projectName, projectID, description):
         return jsonify({'msg': "New Project Created", 'new': True})
     
     return jsonify({'msg': "Unable to create project", 'new': False})
-   
+
+@app.route('/api/updateProject/<projectName>/<int:projectID>/<description>', methods = ['POST'])
+@cross_origin()
+@jwt_required()
+def updateProject(projectName, projectID, description):
+
+    project = {
+        'projectName': projectName,
+        'projectID': projectID,
+        'description': description,
+        'authorized': [current_user['username']],
+        'hw1' : 0,
+        'hw2' : 0,
+        'owner' : current_user['username']
+    }
+    
+    if project_collection.find_one_and_update({'projectID': projectID}):
+        return jsonify({'msg': "ProjectID used already", 'new': False})
+
+    if project_collection.insert_one(project):
+        return jsonify({'msg': "New Project Created", 'new': True})
+    
+    return jsonify({'msg': "Unable to create project", 'new': False})
 
 
 @app.route("/api/deleteProject/<projectName>/<int:projectID>", methods = ['GET','POST'])
