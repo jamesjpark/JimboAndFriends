@@ -12,11 +12,19 @@ function ProjectsList() {
   }
   
   useEffect(() => {
-    axios.get(process.env.REACT_APP_API + "api/projectsList").then(
+    let token = localStorage.getItem('token')
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+    axios.get(process.env.REACT_APP_API + "api/projectsList")
+    .then(
         res => {
           setProjects(res.data)
         }
-      )
+    )
+    .catch(function (error) {
+      console.log(error)
+      alert("PLEASE LOG IN")
+    });
     
   }, []);
 
