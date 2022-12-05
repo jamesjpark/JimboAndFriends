@@ -14,7 +14,8 @@ function HWSet(props) {
 
   useEffect(() => {
 
-    axios.get(process.env.REACT_APP_API + "api/getAuthorized/"+props.project.projectID).then(
+    axios.get(process.env.REACT_APP_API + "api/getProject/"+props.project.projectID).then(
+
         res => {
           setValue(res.data['hw1'])
           setValue2(res.data['hw2'])

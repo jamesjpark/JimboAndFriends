@@ -295,9 +295,9 @@ def projectsList():
     json_data = json.dumps(list_cur, default=str)
     return json_data
 
-@app.route('/api/getAuthorized/<int:projectID>', methods = ['GET'])
+@app.route('/api/getProject/<int:projectID>', methods = ['GET'])
 @cross_origin()
-def getAuthorized(projectID):
+def getProject(projectID):
     project = project_collection.find_one({'projectID': projectID})
     json_data = json.dumps(project, default=str)
     return json_data
