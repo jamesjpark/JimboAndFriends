@@ -295,12 +295,15 @@ def projectsList():
     json_data = json.dumps(list_cur, default=str)
     return json_data
 
-@app.route('/api/getHW/<int:projectID>', methods = ['GET'])
+@app.route('/api/getAuthorized/<int:projectID>', methods = ['GET'])
 @cross_origin()
-def getHW(projectID):
+def getAuthorized(projectID):
     project = project_collection.find_one({'projectID': projectID})
     json_data = json.dumps(project, default=str)
     return json_data
+
+
+
 
 @app.errorhandler(404)
 def not_found(e):

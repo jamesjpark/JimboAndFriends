@@ -4,3 +4,4 @@ node_modules
 web-app/backend/env
 web-app/backend/build
 
+web-app/backend/__pycache__/server.cpython-310.pyc
