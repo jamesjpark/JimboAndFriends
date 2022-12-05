@@ -84,7 +84,11 @@ Get authorized users formated for multiple users and functionality <br />
 Refresh: https://stackoverflow.com/questions/38256256/reactjs-page-refreshing-upon-onclick-handle-of-button <br />
 ##### HW8 GRPC(11/14)
 
-## Sprint 9 11/20-11/27
+## Sprint 9 11/20-11/27 THANKSGIVING BREAK
 
 ## Sprint 10 11/28-12/4
+Goals: 
+Join Button<br />
+Authorized Users<br />
+Editing of Project Name and Description<br />
 
