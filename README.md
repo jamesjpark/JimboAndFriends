@@ -91,4 +91,15 @@ Goals:
 Join Button<br />
 Authorized Users<br />
 Editing of Project Name and Description<br />
+![Screen Shot 2022-12-05 at 3 00 19 PM](https://user-images.githubusercontent.com/61858661/205741872-b778b28a-4742-469c-bac7-e74e5afc217f.png)
+
+![Screen Shot 2022-12-05 at 3 00 12 PM](https://user-images.githubusercontent.com/61858661/205741829-c1aca9d6-6877-47aa-9b72-2ffb38d5698a.png)
+![Uploading Screen Shot 2022-12-05 at 3.00.19 PM.png…]()
+
+![Screen Shot 2022-12-05 at 3 00 36 PM](https://user-images.githubusercontent.com/61858661/205741889-78578711-f85d-4e48-bef8-cc28f0d612fe.png)
+
+![Screen Shot 2022-12-05 at 3 00 43 PM](https://user-images.githubusercontent.com/61858661/205741913-3c80dad4-65f2-40d8-82e8-0955c5e57b98.png)
+
+
+
 
