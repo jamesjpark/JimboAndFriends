@@ -115,6 +115,17 @@ def checkOut_hardWare(projectID: int, hwSet: int, qty: int):
 
     return jsonify({'error': 'project does not exist'}), 400
 
+@app.route("/api/joined/<int:projectId>")
+@cross_origin()
+@jwt_required()
+def joined(projectId: int):
+    project = project_collection.find_one({
+        'projectID': projectId 
+    })
+    authorized = project['authorized']
+    if current_user['username'] not in authorized:
+         return jsonify({"join": True})
+    return jsonify({"join": False})
 
 @app.route("/api/join/<int:projectId>")
 @cross_origin()
@@ -129,7 +140,7 @@ def joinProject(projectId: int):
     if current_user['username'] not in authorized:
         authorized.append(current_user['username'])
     else:
-        return jsonify({"msg": "Already Joined"})
+        return jsonify({"msg": "Already Joined", "join":True})
 
     project_collection.find_one_and_update(
         {'projectID' : projectId},
@@ -137,7 +148,7 @@ def joinProject(projectId: int):
                 {"authorized": authorized}
         }, upsert=True
     )
-    return jsonify({"msg": "Joined successfully", 'authorized' : authorized})
+    return jsonify({"msg": "Joined successfully", "join": True, 'authorized' : authorized})
 
 
 @app.route("/api/leave/<int:projectId>")
@@ -158,7 +169,7 @@ def leaveProject(projectId: int):
                 {"authorized": authorized}
         }, upsert=True
     )
-    return jsonify({"msg": "Left successfully", 'authorized' : authorized})
+    return jsonify({"msg": "Left successfully", "join": False, 'authorized' : authorized})
 
 
 @app.route('/api/login/<username>/<password>/<userID>', methods = ['GET','POST'])
