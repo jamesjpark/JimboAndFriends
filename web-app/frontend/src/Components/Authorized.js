@@ -36,7 +36,7 @@ function Authorized(props) {
       <div className = "authorized">
       {/* Authorized Users: {authorized.map((user => <span>{ user }, </span>))} */}
       Authorized Users: {authorized.map(item => {
-          return <li >{item}</li>;
+          return <li key= {item} >{item}</li>;
         })}
       </div>
       
