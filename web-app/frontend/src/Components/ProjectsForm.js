@@ -15,6 +15,11 @@ function ProjectsForm(props) {
     description: "",
   })
 
+  const [update, setUpdate] = useState({
+    newName: "",
+    newDescription: "",
+  })
+
 
   let str = false;
   const inputRef = useRef(null);
@@ -24,18 +29,16 @@ function ProjectsForm(props) {
     const {value, name} = event.target
     setProject(prevNote => ({
         ...prevNote, [name]: value})
+    
+        
   )};
   
   function handleUpdate(event){
-    event.preventDefault();
-    props.onSubmit({
-      text: project.projectName,
-      name: project.projectName,
-      id: project.projectId,
-      description: project.description,
-      
-    });
-  }
+    const {value, name} = event.target
+    setUpdate(prevNote => ({
+        ...prevNote, [name]: value})
+    
+  )};
 
   function handleSubmit(event) { 
     event.preventDefault();
@@ -95,13 +98,22 @@ function ProjectsForm(props) {
           <input
             ref={inputRef}
             className='project-input edit'
-            placeholder='Update your Project'
-            value={input}
-            onChange={handleChange}
-            name='text'
+            placeholder='Update Project Name'
+            value= {update.newName}
+            onChange={handleUpdate}
+            name='newName'
            
           />
-          <button onClick={handleUpdate} className='project-button edit'>
+          <input
+            ref={inputRef}
+            className='project-input edit'
+            placeholder='Update Description'
+            value= {update.newDescription}
+            onChange={handleUpdate}
+            name='newDescription'
+           
+          />
+          <button onClick={handleSubmit} className='project-button edit'>
             Update Project
           </button>
         </>

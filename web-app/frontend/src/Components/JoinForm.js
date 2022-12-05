@@ -8,19 +8,47 @@ function JoinForm(props){
     
   const [joinText, setJoinText] = useState(true);
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
-  
-  function handlePress(){
+  function refreshPage() {
+    window.location.reload(false);
+  }
+  function handleJoin(event){
     
+    console.log(process.env.REACT_APP_API)
+    axios.get(process.env.REACT_APP_API+ "/api/join/" + props.project.projectID)
+    .then(
+      res => {
+        console.log(props.project.projectID);
+        alert(res.data.msg)
+        setJoinText(false);
+        //refreshPage();
+        
+      }
+    )
+    event.preventDefault()
+  }
+  function handleLeave(event){
+    axios.get(process.env.REACT_APP_API+ "/api/leave/" + props.project.projectID)
+    .then(
+      res => {
+        console.log(props.project.projectID);
+        alert(res.data.msg)
+        setJoinText(true);
+        //refreshPage();
+      }
+
+  
+    )
+    event.preventDefault()
+  }
+
+
+  function handlePress(){
     if(joinText==true){
-      setJoinText(false);
-      alert("Joined Project")
+      handleJoin();
     }
     else{
-      setJoinText(true);
-      alert("Left Project")
+      handleLeave();
     }
-    
   }
  
   return (
@@ -31,7 +59,7 @@ function JoinForm(props){
         joinText ? "Join" : "Leave"
       }
     </button>
-      {/* {open && !joinText? <Popup text = {project} closePopup={() => setOpen(false)} text2 = "Joined" /> : open && joinText ? <Popup text = {project} closePopup={() => setOpen(false)} text2 = "Left" />: null} */}
+     
 
     </div>
   ) 
