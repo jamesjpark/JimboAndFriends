@@ -9,14 +9,17 @@ function ProjectsForm(props) {
     window.location.reload(false);
   }
 
+
   const [project, setProject] = useState({
     name: props.edit?.name ?? "",
     projectId: props.edit?.id ?? "",
     description: props.edit?.description ?? "",
   });
 
+
   let str = false;
   const inputRef = useRef(null);
+
 
   function handleChange(event) {
     const { value, name } = event.target;
@@ -62,6 +65,7 @@ function ProjectsForm(props) {
       description: project.description,
     });
   }
+
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -119,6 +123,7 @@ function ProjectsForm(props) {
         <>
           <input
             ref={inputRef}
+
             className="project-input edit"
             placeholder="Update your Project Name"
             value={project.name}
@@ -134,6 +139,7 @@ function ProjectsForm(props) {
             name="description"
           />
           <button onClick={handleUpdate} className="project-button edit">
+
             Update Project
           </button>
         </>

@@ -51,8 +51,10 @@ function ProjectsList() {
         alert(res.data.msg);
       });
 
+
     // refreshPage();
     const removedArr = [...projects].filter((project) => project.id !== id);
+
     setProjects(removedArr);
   }
 
