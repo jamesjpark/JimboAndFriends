@@ -7,7 +7,7 @@ function Authorized(props) {
   const [description, setDescription] = useState(props.project.description)
 
   async function getAuthorized() {
-    const au = await axios.get(process.env.REACT_APP_API+ "/api/getAuthorized/" + props.project.projectID);
+    const au = await axios.get(process.env.REACT_APP_API+ "/api/getProject/" + props.project.projectID);
     setAuthorized(au.data.authorized);
   }
   
