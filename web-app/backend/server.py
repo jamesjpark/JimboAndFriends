@@ -248,9 +248,9 @@ def newProject(projectName, projectID, description):
 def updateProject(projectName, projectID, description):
 
     project = project_collection.find_one({
-        'projectID': projectId 
+        'projectID': projectID 
     })
-
+    
     authorized = project['authorized']
     if current_user['username'] not in authorized:
         return jsonify({"msg": "not authorized"})
@@ -263,7 +263,7 @@ def updateProject(projectName, projectID, description):
                     "projectName": projectName,
                     "description" : description
                 },
-        }, upsert=True
+        }, upsert=False
     ):
         return jsonify({'msg': "Updated project"})
     return jsonify({'msg': "Unable to create project"})
